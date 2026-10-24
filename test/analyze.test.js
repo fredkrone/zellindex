@@ -1,0 +1,41 @@
+const test = require("node:test");
+const assert = require("node:assert");
+const { analyzeHistory, summarize, isListable } = require("../scanner/analyze");
+
+const NOW = Date.parse("2026-10-24T12:00:00Z");
+const d = s => Date.parse(s + "T12:00:00Z");
+
+test("steady step-downs measure from the high and are listable", () => {
+  const ev = [
+    [d("2026-04-27"), "Listed", 765000], [d("2026-06-09"), "Price Changed", 699975],
+    [d("2026-07-01"), "Price Changed", 595000], [d("2026-08-01"), "Price Changed", 529550],
+    [d("2026-08-24"), "Price Changed", 479900], [d("2026-09-25"), "Price Changed", 419900]
+  ];
+  const r = analyzeHistory(419900, ev, NOW);
+  assert.equal(r.high, 765000);
+  assert.ok(Math.abs(r.pct - 45.1) < 0.1);
+  assert.ok(isListable(Object.assign(r, { home: { yearBuilt: 2026 } })));
+});
+
+test("a one-day typo spike is ignored", () => {
+  const ev = [[d("2026-03-01"), "Listed", 500000], [d("2026-04-01"), "Price Changed", 5000000], [d("2026-05-01"), "Price Changed", 480000]];
+  const r = analyzeHistory(470000, ev, NOW);
+  assert.equal(r.high, 500000);
+});
+
+test("history before the last sale is ignored", () => {
+  const ev = [[d("2023-01-01"), "Listed", 57000], [d("2023-04-21"), "Sold (MLS)", 45000], [d("2026-08-07"), "Listed", 499000], [d("2026-09-06"), "Price Changed", 400000]];
+  const r = analyzeHistory(310000, ev, NOW);
+  assert.equal(r.high, 499000);
+});
+
+test("a feed that flips back to its old price is not listable", () => {
+  const ev = [[d("2026-01-01"), "Listed", 541400], [d("2026-02-01"), "Price Changed", 459000], [d("2026-03-01"), "Price Changed", 455000], [d("2026-04-01"), "Price Changed", 541400], [d("2026-04-20"), "Price Changed", 541400], [d("2026-05-01"), "Price Changed", 379000], [d("2026-06-01"), "Price Changed", 369000]];
+  const r = analyzeHistory(339000, ev, NOW);
+  assert.equal(isListable(Object.assign(r, { home: { yearBuilt: 2025 } })), false);
+});
+
+test("summary counts cut depths and drops implausible >60% rows", () => {
+  const s = summarize([{ pct: 0 }, { pct: 5 }, { pct: 12 }, { pct: 25 }, { pct: 90 }]);
+  assert.deepEqual(s, { withHistory: 4, cutCount: 3, medianCut: 12, down10: 2, down20: 1 });
+});

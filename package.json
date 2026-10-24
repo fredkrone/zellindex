@@ -1,0 +1,12 @@
+{
+  "name": "gravedancing",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Tracks new-construction homes with the biggest price cuts from their peak asking price.",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "scan": "node scanner/run.js",
+    "serve": "npx --yes http-server site -p 8080 -c-1",
+    "test": "node --test"
+  }
+}

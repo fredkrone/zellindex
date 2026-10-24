@@ -1,0 +1,39 @@
+name: Daily scan
+
+# Runs the scanner every morning and commits the refreshed site/data.json.
+# NOTE: the bundled Redfin source is usually blocked from GitHub's servers, and Redfin's terms
+# prohibit automated collection. Keep this workflow disabled until a licensed source is set up
+# (set the SOURCE repository variable to that source's name), or run the scan locally instead.
+
+on:
+  schedule:
+    - cron: "39 13 * * *"   # 6:39 a.m. Pacific (daylight time)
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  scan:
+    if: ${{ vars.SOURCE != '' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm test
+      - name: Scan
+        env:
+          SOURCE: ${{ vars.SOURCE }}
+          # Credentials for a licensed source go in repository secrets, e.g.:
+          # DATA_API_KEY: ${{ secrets.DATA_API_KEY }}
+        run: node scanner/run.js
+      - name: Commit data
+        run: |
+          git config user.name "gravedancing-bot"
+          git config user.email "gravedancing-bot@users.noreply.github.com"
+          git add site/data.json
+          git diff --cached --quiet || git commit -m "Daily scan $(date -u +%F)"
+          git push

@@ -1,0 +1,317 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>The Grave Dancer's List</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* Layout: a builder's plat sheet. Each listing is a numbered lot; the survey-flag pink marks how much of the asking price has fallen away. */
+:root{
+  --bg:#ECEFEA; --paper:#F7F8F4; --ink:#1B221E; --muted:#58645D; --rule:#C6CDC6;
+  --flag:#B8174F; --flag-soft:#F4D6E0; --kept:#8FA096; --link:#1D5C8C;
+  --display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121714; --paper:#1A211D; --ink:#E3E8E2; --muted:#98A59D; --rule:#2E3832;
+  --flag:#F0628F; --flag-soft:#4A1F2E; --kept:#56665D; --link:#8CC2EC; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121714; --paper:#1A211D; --ink:#E3E8E2; --muted:#98A59D; --rule:#2E3832;
+  --flag:#F0628F; --flag-soft:#4A1F2E; --kept:#56665D; --link:#8CC2EC; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1080px;margin:0 auto;padding-block:36px 64px;display:flex;flex-direction:column;gap:44px}
+h1,h2,h3{font-family:var(--display);margin:0;line-height:.92;text-wrap:balance;text-transform:uppercase}
+p{margin:0;max-width:66ch}
+a{color:var(--link);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--flag);outline-offset:2px}
+.label{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+header{display:grid;grid-template-columns:1.25fr 1fr;gap:36px;align-items:end}
+header h1{font-size:clamp(3.4rem,10vw,7rem);font-weight:900}
+header h1 em{font-style:normal;color:var(--flag)}
+.intro{display:flex;flex-direction:column;gap:14px;min-width:0}
+.tape{height:12px;background:repeating-linear-gradient(-45deg,var(--flag) 0 12px,transparent 12px 24px)}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--rule);background:var(--paper)}
+.stat{padding:16px 18px;display:flex;flex-direction:column;gap:4px;border-right:1px solid var(--rule);min-width:0}
+.stat:last-child{border-right:0}
+.stat .v{font-family:var(--display);font-size:2.5rem;font-weight:800;line-height:1}
+.stat .v.hot{color:var(--flag)}
+.stat .d{font-size:.86rem;color:var(--muted);line-height:1.4}
+
+.delta{font-family:var(--mono);font-size:.74rem;color:var(--muted)}
+.delta.up{color:var(--flag);font-weight:600}
+.delta.down{color:var(--link);font-weight:600}
+.trend{display:flex;flex-direction:column;gap:16px;border-top:2px solid var(--ink);padding-top:16px}
+.trend-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.trend h2{font-size:clamp(1.8rem,4vw,2.4rem);font-weight:800}
+.panels{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.panel{margin:0;background:var(--paper);border:1px solid var(--rule);padding:14px 14px 10px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.panel figcaption{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.panel figcaption b{font-family:var(--display);font-size:1.9rem;font-weight:800;color:var(--ink);letter-spacing:0}
+.panel svg{width:100%;height:120px;display:block;overflow:visible}
+.panel .ax{font-family:var(--mono);font-size:10px;fill:var(--muted)}
+.note{font-size:.88rem;color:var(--muted)}
+.controls{display:flex;flex-wrap:wrap;gap:14px 20px;align-items:end;border-top:2px solid var(--ink);padding-top:16px}
+.ctl{display:flex;flex-direction:column;gap:6px}
+.ctl select,.ctl input[type=number]{font:500 .9rem var(--mono);padding:8px 10px;border:1px solid var(--rule);background:var(--paper);color:var(--ink);min-width:9rem}
+.seg{display:flex;border:1px solid var(--ink)}
+.seg button{font:600 .74rem var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:9px 12px;border:0;background:transparent;color:var(--ink);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.count{margin-left:auto;font-family:var(--mono);font-size:.8rem;color:var(--muted);align-self:center}
+
+.lots{display:flex;flex-direction:column;border-top:1px solid var(--rule)}
+.lot{display:grid;grid-template-columns:52px 120px minmax(0,1fr) 200px;gap:20px;padding:18px 0;border-bottom:1px solid var(--rule);align-items:start}
+.lot .rk{font-family:var(--display);font-size:1.6rem;font-weight:800;color:var(--muted);line-height:1}
+.lot .pct{font-family:var(--display);font-weight:900;font-size:3rem;line-height:.85;color:var(--flag)}
+.lot .pct small{display:block;font-family:var(--mono);font-size:.68rem;font-weight:500;color:var(--muted);letter-spacing:.08em;margin-top:6px;text-transform:uppercase}
+.info{display:flex;flex-direction:column;gap:7px;min-width:0}
+.addr{font-weight:600;font-size:1.12rem;line-height:1.25}
+.addr span{font-weight:400;color:var(--muted)}
+.facts{font-family:var(--mono);font-size:.78rem;color:var(--muted)}
+.bld{font-size:.9rem}
+.bar{position:relative;height:16px;background:var(--flag-soft);border:1px solid var(--rule)}
+.bar i{position:absolute;inset:0 auto 0 0;background:var(--kept)}
+.prices{display:flex;justify-content:space-between;gap:10px;font-family:var(--mono);font-size:.8rem;flex-wrap:wrap}
+.prices .now{font-weight:600;color:var(--ink)}
+.prices .was{color:var(--muted);text-decoration:line-through}
+.prices .off{color:var(--flag);font-weight:600}
+.links{display:flex;flex-direction:column;gap:8px}
+.links a{display:flex;justify-content:space-between;align-items:center;gap:8px;font:600 .78rem var(--mono);letter-spacing:.05em;text-transform:uppercase;text-decoration:none;padding:9px 12px;border:1px solid var(--ink);color:var(--ink)}
+.links a:hover{background:var(--ink);color:var(--bg)}
+.links a.pri{background:var(--ink);color:var(--bg)}
+.links a.pri:hover{background:var(--flag);border-color:var(--flag)}
+.empty{padding:28px 0;color:var(--muted)}
+
+.notes{display:grid;grid-template-columns:1fr 1fr;gap:32px;border-top:2px solid var(--ink);padding-top:18px}
+.notes > div{display:flex;flex-direction:column;gap:10px;min-width:0}
+.notes h2{font-size:1.7rem;font-weight:800}
+.notes ul{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:6px;max-width:66ch}
+footer{font-size:.82rem;color:var(--muted)}
+
+@media (max-width:820px){
+  header,.notes{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr 1fr}
+  .panels{grid-template-columns:1fr}
+  .stat:nth-child(2){border-right:0}
+  .stat:nth-child(-n+2){border-bottom:1px solid var(--rule)}
+  .lot{grid-template-columns:38px minmax(0,1fr);gap:10px 14px}
+  .lot .pct{grid-column:2}
+  .lot .info,.lot .links{grid-column:1 / -1}
+  .links{flex-direction:row;flex-wrap:wrap}
+  .links a{flex:1 1 120px}
+  .count{margin-left:0;width:100%}
+}
+</style>
+</head><body>
+
+
+<div class="wrap">
+<header>
+  <div class="intro">
+    <span class="label" id="asof">New construction · Biggest markdowns from the high · Checked Oct 24, 2026</span>
+    <h1>The Grave <em>Dancer's</em> List</h1>
+  </div>
+  <div class="intro">
+    <div class="tape" aria-hidden="true"></div>
+    <p>Grave dancing means buying from a seller who has to sell. These are brand-new homes whose asking price has fallen the furthest from its peak. Each one is still on the market, and each links straight to the listing.</p>
+  </div>
+</header>
+
+<div class="stats">
+  <div class="stat"><span class="label">Homes scanned</span><span class="v num" id="m-scanned">7,452</span><span class="d">New-construction listings on market 60+ days in 40 high-cut cities</span><span class="delta" id="d-scanned"></span></div>
+  <div class="stat"><span class="label">Typical cut</span><span class="v num" id="m-median">6.5%</span><span class="d">Median drop from the high among homes that had been cut</span><span class="delta" id="d-median"></span></div>
+  <div class="stat"><span class="label">Down 10% or more</span><span class="v num" id="m-down10">1,561</span><span class="d">Homes priced at least a tenth below their peak ask</span><span class="delta" id="d-down10"></span></div>
+  <div class="stat"><span class="label">Down 20% or more</span><span class="v hot num" id="m-down20">229</span><span class="d">The graveyard. The best of them are below.</span><span class="delta" id="d-down20"></span></div>
+</div>
+
+<section class="trend" aria-labelledby="trend-h">
+  <div class="trend-head">
+    <h2 id="trend-h">Is the graveyard growing?</h2>
+    <p class="label" id="trend-asof">Daily scan · loading readings…</p>
+  </div>
+  <div class="panels">
+    <figure class="panel"><figcaption><span>Typical cut</span><b class="num" id="t-median">—</b></figcaption><svg id="c-median" viewBox="0 0 320 120" preserveAspectRatio="none" role="img" aria-label="Typical cut over time"></svg></figure>
+    <figure class="panel"><figcaption><span>Down 10%+</span><b class="num" id="t-down10">—</b></figcaption><svg id="c-down10" viewBox="0 0 320 120" preserveAspectRatio="none" role="img" aria-label="Homes down 10% or more over time"></svg></figure>
+    <figure class="panel"><figcaption><span>Down 20%+</span><b class="num" id="t-down20">—</b></figcaption><svg id="c-down20" viewBox="0 0 320 120" preserveAspectRatio="none" role="img" aria-label="Homes down 20% or more over time"></svg></figure>
+  </div>
+  <p class="note" id="trend-note">A new reading is added every morning. The line starts with today's scan.</p>
+</section>
+
+<section style="display:flex;flex-direction:column;gap:0">
+  <div class="controls">
+    <div class="ctl"><label class="label" for="f-state">State</label><select id="f-state"><option value="">All states</option></select></div>
+    <div class="ctl"><label class="label" for="f-max">Max price</label><select id="f-max"><option value="">Any</option><option value="300000">$300k</option><option value="400000">$400k</option><option value="500000">$500k</option><option value="750000">$750k</option><option value="1000000">$1M</option></select></div>
+    <div class="ctl"><label class="label" for="f-who">Seller</label><select id="f-who"><option value="">Anyone</option><option value="b">Named builders only</option><option value="c">Custom / small builders</option></select></div>
+    <div class="ctl"><span class="label">Sort by</span><div class="seg" role="group" aria-label="Sort by">
+      <button type="button" data-sort="pct" aria-pressed="true">% off</button>
+      <button type="button" data-sort="usd" aria-pressed="false">$ off</button>
+      <button type="button" data-sort="price" aria-pressed="false">Price</button>
+    </div></div>
+    <span class="count" id="count"></span>
+  </div>
+  <p class="note" id="state-stats" style="padding-block:10px 0"></p>
+  <div class="lots" id="lots"></div>
+</section>
+
+<section class="notes">
+  <div>
+    <h2>How this was built</h2>
+    <ul>
+      <li>Every morning, scan Redfin's new-construction listings in 105 cities where builders are active, keeping homes on the market 60+ days.</li>
+      <li>Read each home's full price history and take its highest asking price since it was last sold (or the last two years).</li>
+      <li>Drop one-day price glitches, duplicate feeds, land, unbuilt plans and mobile homes; list only homes with at least three step-down cuts.</li>
+      <li>The trend charts use the original 40 cities only, so each day compares with the last.</li>
+    </ul>
+  </div>
+  <div>
+    <h2>Before you dance</h2>
+    <ul>
+      <li>A big drop can mean the first ask was too high, not that the house is cheap. Compare against recent sales nearby.</li>
+      <li>Builders often add rate buydowns or closing credits on top of the cut. Ask what's offered.</li>
+      <li>Perry Homes shows up again and again in Austin and Dallas suburbs; one seller cutting this hard may cut more.</li>
+      <li>Prices change daily. Treat this as a starting list, not advice; I'm not a licensed financial advisor.</li>
+    </ul>
+  </div>
+</section>
+
+<footer id="footer">Data: Redfin listing and price-history records, retrieved Oct 24, 2026. Zillow links open Zillow's search for that address.</footer>
+</div>
+
+<script>
+const FALLBACK = [{"a":"326 Shore Dr","c":"Fort Myers","s":"FL","z":"33905","b":3,"ba":3.5,"sf":2847,"y":2026,"cur":419900,"hi":765000,"hd":"2026-04-27","cuts":5,"bld":null,"com":null,"u":"/FL/Fort-Myers/326-Shore-Dr-33905/home/67926198"},{"a":"2843 NW 6th St","c":"Cape Coral","s":"FL","z":"33993","b":3,"ba":2,"sf":1800,"y":2026,"cur":310000,"hi":499000,"hd":"2026-08-07","cuts":3,"bld":null,"com":null,"u":"/FL/Cape-Coral/2843-NW-6th-St-33993/home/67759096"},{"a":"3005 E 17th Ave","c":"Tampa","s":"FL","z":"33605","b":3,"ba":3.5,"sf":2180,"y":2023,"cur":459000,"hi":715000,"hd":"2024-12-06","cuts":10,"bld":null,"com":null,"u":"/FL/Tampa/3005-E-17th-Ave-33605/home/47331433"},{"a":"1234 NW 36th Ave","c":"Cape Coral","s":"FL","z":"33993","b":3,"ba":3,"sf":2100,"y":2024,"cur":795000,"hi":1199000,"hd":"2024-11-27","cuts":5,"bld":null,"com":null,"u":"/FL/Cape-Coral/1234-NW-36th-Ave-33993/home/67745855"},{"a":"1912 NW 24th Ter","c":"Cape Coral","s":"FL","z":"33993","b":3,"ba":2,"sf":1893,"y":2025,"cur":410000,"hi":575000,"hd":"2025-04-30","cuts":12,"bld":null,"com":null,"u":"/FL/Cape-Coral/1912-NW-24th-Ter-33993/home/61996890"},{"a":"3539 NW 41st Pl","c":"Cape Coral","s":"FL","z":"33993","b":4,"ba":3,"sf":2150,"y":2026,"cur":430000,"hi":600000,"hd":"2026-04-05","cuts":9,"bld":null,"com":null,"u":"/FL/Cape-Coral/3539-NW-41st-Pl-33993/home/67861205"},{"a":"3410 NW 39th Ln","c":"Cape Coral","s":"FL","z":"33993","b":3,"ba":2,"sf":2020,"y":2025,"cur":449900,"hi":620000,"hd":"2025-08-21","cuts":9,"bld":null,"com":null,"u":"/FL/Cape-Coral/3410-NW-39th-Ln-33993/home/67823888"},{"a":"1528 SW 15th Ave","c":"Cape Coral","s":"FL","z":"33991","b":4,"ba":3,"sf":2940,"y":2024,"cur":799000,"hi":1100000,"hd":"2024-09-16","cuts":7,"bld":null,"com":null,"u":"/FL/Cape-Coral/1528-SW-15th-Ave-33991/home/67849930"},{"a":"410 S West Shore Blvd","c":"Tampa","s":"FL","z":"33609","b":5,"ba":4,"sf":3784,"y":2026,"cur":1349000,"hi":1850000,"hd":"2026-01-14","cuts":9,"bld":null,"com":null,"u":"/FL/Tampa/410-S-West-Shore-Blvd-33609/home/47274268"},{"a":"10953 NW Glynlea Blvd N","c":"Port St. Lucie","s":"FL","z":"34987","b":4,"ba":3,"sf":2749,"y":2026,"cur":749900,"hi":978900,"hd":"2026-01-06","cuts":11,"bld":"Perry Homes","com":"Glynlea Country Club","u":"/FL/Port-St-Lucie/10953-NW-Glynlea-Blvd-N-34987/home/206606278"},{"a":"5800 Freesia Dr","c":"Lakeland","s":"FL","z":"33811","b":5,"ba":4,"sf":3531,"y":2025,"cur":597230,"hi":760230,"hd":"2025-08-20","cuts":8,"bld":"M/I Homes","com":"Hawthorne Ranch","u":"/FL/Lakeland/5800-Freesia-Dr-33811/home/194083418"},{"a":"1308 E Columbus Dr #2","c":"Tampa","s":"FL","z":"33605","b":3,"ba":3.5,"sf":1733,"y":2026,"cur":599000,"hi":745000,"hd":"2026-05-04","cuts":9,"bld":null,"com":null,"u":"/FL/Tampa/1308-E-Columbus-Dr-33605/unit-2/home/190489711"},{"a":"125 Burke St","c":"Liberty Hill","s":"TX","z":"78642","b":4,"ba":3.5,"sf":2574,"y":2026,"cur":499900,"hi":753900,"hd":"2026-07-08","cuts":8,"bld":"Perry Homes","com":"Eldorado at Santa Rita Ranch","u":"/TX/Liberty-Hill/125-Burke-St-78642/home/202288357"},{"a":"2618 Brooklyn St","c":"Forney","s":"TX","z":"75126","b":4,"ba":3,"sf":1942,"y":2026,"cur":323900,"hi":487900,"hd":"2026-05-02","cuts":11,"bld":"Perry Homes","com":"Meraki","u":"/TX/Forney/2618-Brooklyn-St-75126/home/201678173"},{"a":"3511 Harvest Way","c":"Princeton","s":"TX","z":"75407","b":4,"ba":3.5,"sf":3358,"y":2025,"cur":650000,"hi":962649,"hd":"2025-11-18","cuts":9,"bld":"Cope Homes","com":"Hidden Valley","u":"/TX/Princeton/3511-Harvest-Way-75407/home/194851094"},{"a":"1424 Purple Petunia Ln","c":"Georgetown","s":"TX","z":"78628","b":3,"ba":2.5,"sf":2187,"y":2026,"cur":499900,"hi":723900,"hd":"2026-07-14","cuts":10,"bld":"Perry Homes","com":"Parkside on the River West","u":"/TX/Georgetown/1424-Purple-Petunia-Ln-78628/home/198351939"},{"a":"420 River Overlook Rd","c":"Georgetown","s":"TX","z":"78628","b":4,"ba":3.5,"sf":2942,"y":2026,"cur":644900,"hi":919900,"hd":"2025-11-18","cuts":12,"bld":"Perry Homes","com":"Wolf Ranch","u":"/TX/Georgetown/420-River-Overlook-Rd-78628/home/199150272"},{"a":"9539 Boedeker Dr","c":"Dallas","s":"TX","z":"75225","b":6,"ba":7.5,"sf":5630,"y":2026,"cur":2995000,"hi":4250000,"hd":"2025-03-03","cuts":4,"bld":null,"com":null,"u":"/TX/Dallas/9539-Boedeker-Dr-75225/home/30872049"},{"a":"105 Ensberg Ln","c":"Liberty Hill","s":"TX","z":"78642","b":4,"ba":3.5,"sf":2944,"y":2026,"cur":549000,"hi":779000,"hd":"2026-03-23","cuts":5,"bld":"Toll Brothers","com":"Santa Rita Ranch – Maravilla","u":"/TX/Liberty-Hill/105-Ensberg-Ln-78642/home/200971626"},{"a":"1017 Sunset Hill Way","c":"Georgetown","s":"TX","z":"78628","b":4,"ba":3.5,"sf":2944,"y":2026,"cur":649900,"hi":919900,"hd":"2026-02-27","cuts":16,"bld":"Perry Homes","com":"Parkside on the River West","u":"/TX/Georgetown/1017-Sunset-Hill-Way-78628/home/200690740"},{"a":"104 Angels Joy Cv","c":"Georgetown","s":"TX","z":"78628","b":4,"ba":3.5,"sf":2561,"y":2026,"cur":577900,"hi":810900,"hd":"2026-07-01","cuts":7,"bld":"Perry Homes","com":"Parkside on the River","u":"/TX/Georgetown/104-Angels-Joy-Cv-78628/home/202288442"},{"a":"3334 Big Buffalo St","c":"Forney","s":"TX","z":"75126","b":4,"ba":3,"sf":2504,"y":2026,"cur":398900,"hi":556900,"hd":"2026-04-07","cuts":8,"bld":"Perry Homes","com":"Meraki","u":"/TX/Forney/3334-Big-Buffalo-St-75126/home/201213340"},{"a":"14542 Lovelace St","c":"Celina","s":"TX","z":"75009","b":5,"ba":4,"sf":2845,"y":2026,"cur":474379,"hi":661512,"hd":"2026-06-30","cuts":7,"bld":"Bloomfield Homes","com":"Creekview Meadows","u":"/TX/Celina/14542-Lovelace-St-75009/home/202479862"},{"a":"9620 Mav Ln","c":"Dallas","s":"TX","z":"75238","b":3,"ba":3.5,"sf":2266,"y":2026,"cur":745000,"hi":1030000,"hd":"2025-05-15","cuts":4,"bld":null,"com":null,"u":"/TX/Dallas/9620-Mav-Ln-75238/home/188124254"},{"a":"2818 E 22nd St #2","c":"Austin","s":"TX","z":"78722","b":3,"ba":2.5,"sf":1930,"y":2026,"cur":589999,"hi":815000,"hd":"2026-01-07","cuts":13,"bld":null,"com":null,"u":"/TX/Austin/2818-E-22nd-St-78722/unit-2/home/199969456"},{"a":"1041 Sunset Hill Way","c":"Georgetown","s":"TX","z":"78628","b":4,"ba":3.5,"sf":2995,"y":2026,"cur":674900,"hi":928900,"hd":"2026-02-06","cuts":15,"bld":"Perry Homes","com":"Parkside on the River West","u":"/TX/Georgetown/1041-Sunset-Hill-Way-78628/home/200381102"},{"a":"510 Corniche Cir","c":"Hutto","s":"TX","z":"78634","b":4,"ba":3,"sf":2709,"y":2026,"cur":388499,"hi":533990,"hd":"2026-04-09","cuts":17,"bld":"Lennar","com":"Cotton Brook","u":"/TX/Hutto/510-Corniche-Cir-78634/home/198354655"},{"a":"4803 Philco Dr","c":"Austin","s":"TX","z":"78745","b":3,"ba":2.5,"sf":2463,"y":2025,"cur":800000,"hi":1095000,"hd":"2025-11-06","cuts":9,"bld":null,"com":null,"u":"/TX/Austin/4803-Philco-Dr-78745/home/31711276"},{"a":"4553 Lamplights Dr","c":"Prosper","s":"TX","z":"75078","b":3,"ba":2.5,"sf":2249,"y":2024,"cur":364900,"hi":499000,"hd":"2025-07-02","cuts":11,"bld":null,"com":null,"u":"/TX/Prosper/4553-Lamplights-Dr-75078/home/192492454"},{"a":"2508 Grinnel Dr","c":"Celina","s":"TX","z":"75009","b":4,"ba":3.5,"sf":3184,"y":2025,"cur":499990,"hi":679329,"hd":"2024-12-30","cuts":8,"bld":"William Ryan Homes","com":"Ten Mile Creek","u":"/TX/Celina/2508-Grinnel-Dr-75009/home/194481878"},{"a":"7526 Kenwell St","c":"Dallas","s":"TX","z":"75209","b":5,"ba":4.5,"sf":4539,"y":2024,"cur":1400000,"hi":1900000,"hd":"2024-08-06","cuts":12,"bld":null,"com":null,"u":"/TX/Dallas/7526-Kenwell-St-75209/home/30851455"},{"a":"536 Stark Mews","c":"Celina","s":"TX","z":"75009","b":4,"ba":3.5,"sf":3080,"y":2025,"cur":479990,"hi":649990,"hd":"2026-01-07","cuts":7,"bld":"Olivia Clarke Homes","com":"The Heights at Uptown Celina","u":"/TX/Celina/536-Stark-Mews-75009/home/199969405"},{"a":"116 Twins Trl","c":"Hutto","s":"TX","z":"78634","b":4,"ba":2,"sf":1867,"y":2026,"cur":243249,"hi":327999,"hd":"2026-06-16","cuts":15,"bld":"Lennar","com":"Winfield Park","u":"/TX/Hutto/116-Twins-Trl-78634/home/198353539"},{"a":"3604 Water Lily Way","c":"Celina","s":"TX","z":"75009","b":4,"ba":3.5,"sf":3161,"y":2026,"cur":514990,"hi":693210,"hd":"2026-06-09","cuts":10,"bld":"M/I Homes","com":"Lilyana","u":"/TX/Celina/3604-Water-Lily-Way-75009/home/202191624"},{"a":"305 Rockies Rd","c":"Hutto","s":"TX","z":"78634","b":4,"ba":2,"sf":1692,"y":2026,"cur":222199,"hi":297999,"hd":"2026-07-07","cuts":10,"bld":"Lennar","com":"Winfield Park","u":"/TX/Hutto/305-Rockies-Rd-78634/home/198353156"},{"a":"1732 Knoll Rdg","c":"New Braunfels","s":"TX","z":"78130","b":3,"ba":2,"sf":1440,"y":2024,"cur":194999,"hi":259950,"hd":"2025-09-10","cuts":13,"bld":null,"com":null,"u":"/TX/New-Braunfels/1732-Knoll-Rdg-78130/home/192400789"},{"a":"2640 Novara Trl","c":"Leander","s":"TX","z":"78641","b":5,"ba":5.5,"sf":5672,"y":2026,"cur":1249000,"hi":1656403,"hd":"2026-04-11","cuts":3,"bld":"Toll Brothers","com":"Travisso","u":"/TX/Leander/2640-Novara-Trl-78641/home/197741825"},{"a":"2224 Rolling Oaks Dr","c":"Aledo","s":"TX","z":"76008","b":3,"ba":2.5,"sf":1992,"y":2026,"cur":459558,"hi":614265,"hd":"2026-06-05","cuts":7,"bld":"David Weekley Homes","com":"Walsh","u":"/TX/Aledo/2224-Rolling-Oaks-Dr-76008/home/202149060"},{"a":"105 Calcite Rd #4","c":"Kyle","s":"TX","z":"78640","b":3,"ba":2.5,"sf":1755,"y":2025,"cur":229990,"hi":300340,"hd":"2026-01-21","cuts":5,"bld":"Meritage Homes","com":"Waterstone Village","u":"/TX/Kyle/105-Calcite-Rd-78640/unit-4/home/190699817"},{"a":"40 Reflection Shores Ln","c":"Henderson","s":"NV","z":"89011","b":4,"ba":4.5,"sf":4852,"y":2024,"cur":3500000,"hi":4995000,"hd":"2024-10-04","cuts":11,"bld":null,"com":null,"u":"/NV/Henderson/40-Reflection-Shores-Ln-89011/home/167696002"},{"a":"1626 Strada Gracia","c":"Henderson","s":"NV","z":"89011","b":5,"ba":4,"sf":3680,"y":2025,"cur":1399950,"hi":1819950,"hd":"2026-02-07","cuts":14,"bld":"Richmond American","com":"Salerno Summit, Lake Las Vegas","u":"/NV/Henderson/1626-Strada-Gracia-89011/home/194729351"},{"a":"1634 N Sheridan Blvd #101","c":"Denver","s":"CO","z":"80204","b":1,"ba":1,"sf":500,"y":2026,"cur":224990,"hi":397990,"hd":"2025-06-05","cuts":6,"bld":"Lokal Homes","com":"The Scene at Sloan's Lake","u":"/CO/Denver/1634-Sheridan-Blvd-80204/unit-101/home/195457245"},{"a":"1059 S York St","c":"Denver","s":"CO","z":"80209","b":5,"ba":7,"sf":5004,"y":2026,"cur":2895000,"hi":4000000,"hd":"2026-02-06","cuts":3,"bld":null,"com":null,"u":"/CO/Denver/1059-S-York-St-80209/home/34129069"},{"a":"5128 W 26th Ave #104","c":"Denver","s":"CO","z":"80212","b":2,"ba":3,"sf":1606,"y":2024,"cur":599000,"hi":815000,"hd":"2024-10-17","cuts":6,"bld":null,"com":null,"u":"/CO/Denver/5128-W-26th-Ave-80212/unit-104/home/195045947"},{"a":"142 Argosy Dr","c":"Summerville","s":"SC","z":"29483","b":4,"ba":3.5,"sf":3047,"y":2025,"cur":825000,"hi":1150000,"hd":"2025-06-06","cuts":5,"bld":null,"com":null,"u":"/SC/Summerville/142-Argosy-29483/home/196001209"},{"a":"5368 Crinum Lilly","c":"Summerville","s":"SC","z":"29485","b":3,"ba":2.5,"sf":2013,"y":2026,"cur":399990,"hi":487300,"hd":"2026-08-03","cuts":4,"bld":"Ashton Woods","com":"Watson Hill","u":"/SC/Summerville/5368-Crinum-Lilly-29485/home/204159778"},{"a":"26731 N 155th Ave","c":"Surprise","s":"AZ","z":"85387","b":4,"ba":3.5,"sf":3454,"y":2025,"cur":999990,"hi":1289000,"hd":"2025-09-26","cuts":7,"bld":null,"com":null,"u":"/AZ/Surprise/26731-N-155th-Ave-85387/home/173750837"},{"a":"30540 W Creosote Way","c":"Buckeye","s":"AZ","z":"85396","b":4,"ba":2,"sf":1832,"y":2026,"cur":324990,"hi":407580,"hd":"2026-04-22","cuts":6,"bld":"Meritage Homes","com":"Teravalis","u":"/AZ/Buckeye/30540-W-Creosote-Way-85396/home/194248763"},{"a":"615 W Peace St #307","c":"Raleigh","s":"NC","z":"27605","b":2,"ba":2,"sf":972,"y":2024,"cur":399999,"hi":535000,"hd":"2024-10-03","cuts":8,"bld":null,"com":null,"u":"/NC/Raleigh/615-W-Peace-St-27605/unit-307/home/174324332"},{"a":"501 S Bloodworth St #104","c":"Raleigh","s":"NC","z":"27601","b":3,"ba":3.5,"sf":2717,"y":2025,"cur":1099000,"hi":1427450,"hd":"2025-04-25","cuts":4,"bld":"Chappell Residential","com":"Idyle","u":"/NC/Raleigh/501-S-Bloodworth-St-27601/unit-104/home/184233179"},{"a":"5422 Running Fox Ln","c":"Durham","s":"NC","z":"27703","b":3,"ba":2.5,"sf":1732,"y":2026,"cur":299900,"hi":388025,"hd":"2026-02-06","cuts":6,"bld":"Eastwood Homes","com":"Running Brook Townes","u":"/NC/Durham/5422-Running-Fox-Ln-27703/home/200382317"},{"a":"5477 Meadowlark Ct","c":"Winston-Salem","s":"NC","z":"27106","b":5,"ba":5,"sf":4826,"y":2025,"cur":895000,"hi":1150000,"hd":"2025-10-07","cuts":3,"bld":null,"com":null,"u":"/NC/Winston-Salem/5477-Meadowlark-Ct-27106/home/194665265"},{"a":"3914 Sedgefield Green Pl","c":"Greensboro","s":"NC","z":"27407","b":3,"ba":2.5,"sf":1558,"y":2026,"cur":268990,"hi":322560,"hd":"2026-07-19","cuts":4,"bld":"Pulte Homes","com":"Sedgefield Green","u":"/NC/Greensboro/3914-Sedgefield-Green-Pl-27407/home/205552194"},{"a":"12705 S Lenora Pl","c":"Nampa","s":"ID","z":"83686","b":3,"ba":3.5,"sf":2570,"y":2026,"cur":569999,"hi":711702,"hd":"2026-04-02","cuts":11,"bld":"Woodbridge Pacific Group","com":"Sagewater","u":"/ID/Nampa/12705-S-Lenora-Pl-83686/home/191857968"},{"a":"1703 S Federal Way","c":"Boise","s":"ID","z":"83705","b":3,"ba":3.5,"sf":1821,"y":2026,"cur":499880,"hi":599880,"hd":"2026-03-05","cuts":9,"bld":"Tresidio Homes","com":"Midtown Heights","u":"/ID/Boise/1703-S-Federal-Way-83705/home/194182037"}];
+
+(async function(){
+  const $ = id => document.getElementById(id);
+  const fmt = n => Number(n).toLocaleString("en-US");
+  const usd = n => n >= 1e6 ? "$" + (n/1e6).toFixed(n >= 1e7 ? 1 : 2).replace(/\.?0+$/,"") + "M" : "$" + Math.round(n/1000).toLocaleString("en-US") + "k";
+  const full = n => "$" + Number(n).toLocaleString("en-US");
+  const MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  const when = d => { if (!d || d === "now") return ""; const [y,m] = d.split("-"); return MON[+m-1] + " " + y; };
+  const short = d => { const [, m, dd] = d.split("-"); return MON[+m-1] + " " + (+dd); };
+  const longDate = d => { const [y, m, dd] = d.split("-"); return MON[+m-1] + " " + (+dd) + ", " + y; };
+  const zillow = h => "https://www.zillow.com/homes/" + encodeURIComponent((h.a.replace("#","Unit ") + " " + h.c + " " + h.s + " " + h.z).replace(/\s+/g,"-")) + "_rb/";
+  const esc = s => String(s == null ? "" : s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  const titleCase = s => s && s === s.toUpperCase() ? s.toLowerCase().replace(/\b\w/g, c => c.toUpperCase()) : s;
+
+  // Load the daily data file published beside the page; fall back to the list embedded at build time.
+  let data = null;
+  try { const r = await fetch("data.json", { cache: "no-store" }); if (r.ok) data = await r.json(); } catch (e) {}
+  const HOMES = data && Array.isArray(data.homes) && data.homes.length
+    ? data.homes.map(a => ({ a:a[0], c:a[1], s:a[2], z:a[3], b:a[4], ba:a[5], sf:a[6], y:a[7], cur:a[8], hi:a[9], hd:a[10], cuts:a[11], bld:titleCase(a[12]), u:a[13] }))
+    : FALLBACK;
+  const history = (data && data.history) || [];
+  const latest = history.length ? history[history.length - 1] : null;
+  HOMES.forEach(h => { h.off = h.hi - h.cur; h.pct = h.off / h.hi * 100; });
+  if (data && data.updated) {
+    $("asof").textContent = "New construction · Biggest markdowns from the high · Updated " + longDate(data.updated);
+    $("footer").textContent = "Data: Redfin listing and price-history records, rescanned daily; last scan " + longDate(data.updated) + ". Zillow links open Zillow's search for that address.";
+  }
+
+  // ---- Home list ----
+  const stSel = $("f-state");
+  [...new Set(HOMES.map(h=>h.s))].sort().forEach(s => { const o = document.createElement("option"); o.value = s; o.textContent = s + " (" + HOMES.filter(h=>h.s===s).length + ")"; stSel.appendChild(o); });
+  let sort = "pct";
+  const lots = $("lots"), count = $("count");
+  function stateLine(){
+    const st = stSel.value, el = $("state-stats");
+    const bs = latest && latest.byState && st ? latest.byState[st] : null;
+    const all = latest && latest.all;
+    if (bs) el.textContent = st + " today: " + fmt(bs.scanned) + " new homes scanned · typical cut " + (+bs.medianCut).toFixed(1) + "% · " + fmt(bs.down10) + " down 10%+ · " + fmt(bs.down20) + " down 20%+";
+    else if (all) el.textContent = "All " + all.cities + " cities today: " + fmt(all.scanned) + " new homes scanned · typical cut " + (+all.medianCut).toFixed(1) + "% · " + fmt(all.down10) + " down 10%+ · " + fmt(all.down20) + " down 20%+";
+    else el.textContent = "";
+  }
+  function render(){
+    const st = stSel.value, mx = +$("f-max").value || Infinity, who = $("f-who").value;
+    let list = HOMES.filter(h => (!st || h.s === st) && h.cur <= mx && (!who || (who === "b" ? !!h.bld : !h.bld)));
+    list.sort((a,b) => sort === "pct" ? b.pct - a.pct : sort === "usd" ? b.off - a.off : a.cur - b.cur);
+    count.textContent = list.length + " of " + HOMES.length + " homes";
+    stateLine();
+    if (!list.length) { lots.innerHTML = '<p class="empty">No homes match these filters. Widen the price or state.</p>'; return; }
+    lots.innerHTML = list.map((h,i) => {
+      const keep = (h.cur / h.hi * 100).toFixed(1);
+      const who = h.bld ? esc(h.bld) + (h.com ? " · " + esc(h.com) : "") : "Custom or small builder";
+      const facts = [h.b != null ? h.b + " bd" : "", h.ba != null ? h.ba + " ba" : "", h.sf ? fmt(h.sf) + " sq ft" : "", h.y ? "built " + h.y : "", h.cuts + " price cuts"].filter(Boolean).join(" · ");
+      return '<article class="lot">' +
+        '<span class="rk">' + (i+1) + '</span>' +
+        '<div class="pct num">' + h.pct.toFixed(1) + '%<small>off the high</small></div>' +
+        '<div class="info">' +
+          '<div class="addr">' + esc(h.a) + ' <span>' + esc(h.c) + ', ' + esc(h.s) + ' ' + esc(h.z) + '</span></div>' +
+          '<div class="facts">' + facts + '</div>' +
+          '<div class="bld">' + who + '</div>' +
+          '<div class="bar" role="img" aria-label="Now ' + keep + '% of peak price"><i style="width:' + keep + '%"></i></div>' +
+          '<div class="prices"><span><span class="was">' + full(h.hi) + '</span> peak' + (when(h.hd) ? ', ' + when(h.hd) : '') + '</span><span class="now">Now ' + full(h.cur) + '</span><span class="off">−' + usd(h.off) + '</span></div>' +
+        '</div>' +
+        '<div class="links">' +
+          '<a class="pri" href="' + esc(/^https?:/.test(h.u) ? h.u : 'https://www.redfin.com' + h.u) + '" target="_blank" rel="noopener">' + (/^https?:/.test(h.u) ? 'View listing' : 'Redfin listing') + ' <span aria-hidden="true">↗</span></a>' +
+          '<a href="' + zillow(h) + '" target="_blank" rel="noopener">Zillow <span aria-hidden="true">↗</span></a>' +
+        '</div>' +
+      '</article>';
+    }).join("");
+  }
+  ["f-state","f-max","f-who"].forEach(id => $(id).addEventListener("change", render));
+  document.querySelectorAll(".seg button").forEach(b => b.addEventListener("click", () => {
+    sort = b.dataset.sort;
+    document.querySelectorAll(".seg button").forEach(x => x.setAttribute("aria-pressed", x === b));
+    render();
+  }));
+  render();
+
+  // ---- Daily trend (core 40 cities) ----
+  function delta(el, cur, prev, unit){
+    if (prev == null) { el.textContent = ""; return; }
+    const d = cur - prev;
+    if (Math.abs(d) < 1e-9) { el.textContent = "No change from last reading"; el.className = "delta"; return; }
+    el.textContent = (d > 0 ? "▲ " : "▼ ") + (unit === "%" ? Math.abs(d).toFixed(2) + " pts" : fmt(Math.abs(d))) + " since last reading";
+    el.className = "delta " + (d > 0 ? "up" : "down");
+  }
+  function chart(svg, rows, key, isPct){
+    const W = 320, H = 120, L = 4, R = 4, T = 10, B = 18;
+    const vals = rows.map(r => +r[key]);
+    let lo = Math.min(...vals), hi = Math.max(...vals);
+    if (hi === lo) { const pad = isPct ? 0.5 : Math.max(5, hi * 0.05); lo -= pad; hi += pad; }
+    else { const pad = (hi - lo) * 0.15; lo -= pad; hi += pad; }
+    const x = i => rows.length === 1 ? W / 2 : L + i * (W - L - R) / (rows.length - 1);
+    const y = v => T + (1 - (v - lo) / (hi - lo)) * (H - T - B);
+    const pts = vals.map((v,i) => x(i).toFixed(1) + "," + y(v).toFixed(1));
+    let s = '<line x1="0" x2="' + W + '" y1="' + (H - B) + '" y2="' + (H - B) + '" stroke="var(--rule)" stroke-width="1"/>';
+    if (rows.length > 1) {
+      s += '<polygon points="' + x(0).toFixed(1) + ',' + (H - B) + ' ' + pts.join(" ") + ' ' + x(rows.length-1).toFixed(1) + ',' + (H - B) + '" fill="var(--flag-soft)" stroke="none"/>';
+      s += '<polyline points="' + pts.join(" ") + '" fill="none" stroke="var(--flag)" stroke-width="2" vector-effect="non-scaling-stroke"/>';
+    }
+    const last = rows.length - 1;
+    s += '<circle cx="' + x(last).toFixed(1) + '" cy="' + y(vals[last]).toFixed(1) + '" r="4" fill="var(--flag)"/>';
+    s += '<text class="ax" x="2" y="' + (H - 4) + '" text-anchor="start">' + short(rows[0].date) + '</text>';
+    if (rows.length > 1) s += '<text class="ax" x="' + (W - 2) + '" y="' + (H - 4) + '" text-anchor="end">' + short(rows[last].date) + '</text>';
+    svg.innerHTML = s;
+  }
+  if (!history.length) { $("trend-asof").textContent = "Daily scan · first reading pending"; return; }
+  const cur = latest, prev = history.length > 1 ? history[history.length - 2] : null;
+  $("m-scanned").textContent = fmt(cur.scanned);
+  $("m-median").textContent = (+cur.medianCut).toFixed(1) + "%";
+  $("m-down10").textContent = fmt(cur.down10);
+  $("m-down20").textContent = fmt(cur.down20);
+  delta($("d-scanned"), cur.scanned, prev && prev.scanned);
+  delta($("d-median"), +cur.medianCut, prev && +prev.medianCut, "%");
+  delta($("d-down10"), cur.down10, prev && prev.down10);
+  delta($("d-down20"), cur.down20, prev && prev.down20);
+  $("t-median").textContent = (+cur.medianCut).toFixed(2) + "%";
+  $("t-down10").textContent = fmt(cur.down10);
+  $("t-down20").textContent = fmt(cur.down20);
+  chart($("c-median"), history, "medianCut", true);
+  chart($("c-down10"), history, "down10");
+  chart($("c-down20"), history, "down20");
+  $("trend-asof").textContent = "Daily scan · " + history.length + (history.length === 1 ? " reading" : " readings") + " · latest " + short(cur.date);
+  $("trend-note").textContent = history.length < 3
+    ? "A new reading is added every morning, always from the same 40 cities so the days compare. Give it a week or two before reading much into the direction."
+    : "Rising lines mean more builders are cutting, and cutting deeper. Each reading rescans the same 40 cities.";
+})();
+</script>
+
+</body></html>
