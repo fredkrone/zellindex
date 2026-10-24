@@ -1,7 +1,36 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>The Grave Dancer's List</title>
-<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="New-construction homes with the deepest price cuts from their peak asking price, across 105 U.S. cities. Updated every morning, with a daily index of how many builders are cutting.">
+<link rel="canonical" href="https://fredkrone.github.io/zellindex/">
+<meta name="theme-color" content="#ECEFEA">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="The Grave Dancer's List">
+<meta property="og:title" content="The Grave Dancer's List: new homes with the deepest price cuts">
+<meta property="og:description" content="New-construction homes with the deepest price cuts from their peak asking price, across 105 U.S. cities. Updated every morning, with a daily index of how many builders are cutting.">
+<meta property="og:url" content="https://fredkrone.github.io/zellindex/">
+<meta property="og:image" content="https://fredkrone.github.io/zellindex/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The Grave Dancer's List: new homes with the deepest cuts from their peak asking price.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Grave Dancer's List">
+<meta name="twitter:description" content="New-construction homes with the deepest price cuts from their peak asking price, across 105 U.S. cities. Updated every morning, with a daily index of how many builders are cutting.">
+<meta name="twitter:image" content="https://fredkrone.github.io/zellindex/og.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231B221E'/%3E%3Cpath d='M6 10h20M6 16h14M6 22h8' stroke='%23F0628F' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E">
+<script>
+  // Site settings. Fill these in to switch features on; leave "" to keep them off.
+  window.SITE = {
+    goatcounter: "",  // GoatCounter site code, e.g. "zellindex" for zellindex.goatcounter.com
+    buttondown: ""    // Buttondown username, e.g. "zellindex"
+  };
+  if (window.SITE.goatcounter) {
+    var gc = document.createElement("script");
+    gc.async = true; gc.src = "https://gc.zgo.at/count.js";
+    gc.setAttribute("data-goatcounter", "https://" + window.SITE.goatcounter + ".goatcounter.com/count");
+    document.head.appendChild(gc);
+  }
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
@@ -58,6 +87,18 @@ header h1 em{font-style:normal;color:var(--flag)}
 .panel svg{width:100%;height:120px;display:block;overflow:visible}
 .panel .ax{font-family:var(--mono);font-size:10px;fill:var(--muted)}
 .note{font-size:.88rem;color:var(--muted)}
+.signup{display:grid;grid-template-columns:1.1fr 1fr;gap:28px;align-items:center;background:var(--ink);color:var(--bg);padding:28px}
+.signup h2{font-size:clamp(1.9rem,4.5vw,2.8rem);font-weight:900;color:var(--bg)}
+.signup h2 em{font-style:normal;color:var(--flag)}
+.signup p{color:var(--bg);opacity:.85}
+.signup form{display:flex;flex-direction:column;gap:10px;min-width:0}
+.signup .row{display:flex;gap:8px;flex-wrap:wrap}
+.signup input[type=email]{flex:1 1 220px;min-width:0;font:500 1rem var(--mono);padding:12px 14px;border:1px solid var(--bg);background:var(--bg);color:var(--ink)}
+.signup button{font:700 .82rem var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:12px 18px;border:0;background:var(--flag);color:#fff;cursor:pointer}
+.signup button:hover{filter:brightness(1.1)}
+.signup small{font-family:var(--mono);font-size:.72rem;opacity:.7}
+.signup .ok{font-family:var(--mono);font-size:.85rem;color:var(--bg)}
+@media (max-width:820px){.signup{grid-template-columns:1fr}}
 .controls{display:flex;flex-wrap:wrap;gap:14px 20px;align-items:end;border-top:2px solid var(--ink);padding-top:16px}
 .ctl{display:flex;flex-direction:column;gap:6px}
 .ctl select,.ctl input[type=number]{font:500 .9rem var(--mono);padding:8px 10px;border:1px solid var(--rule);background:var(--paper);color:var(--ink);min-width:9rem}
@@ -142,6 +183,23 @@ footer{font-size:.82rem;color:var(--muted)}
     <figure class="panel"><figcaption><span>Down 20%+</span><b class="num" id="t-down20">—</b></figcaption><svg id="c-down20" viewBox="0 0 320 120" preserveAspectRatio="none" role="img" aria-label="Homes down 20% or more over time"></svg></figure>
   </div>
   <p class="note" id="trend-note">A new reading is added every morning. The line starts with today's scan.</p>
+</section>
+
+<section class="signup" id="signup" aria-labelledby="signup-h" hidden>
+  <div style="display:flex;flex-direction:column;gap:10px;min-width:0">
+    <h2 id="signup-h">The <em>house of the week</em>, every Monday</h2>
+    <p>One email a week: the deepest new-construction markdown we found, how the price fell, and whether builder cuts are spreading.</p>
+  </div>
+  <form id="signup-form" method="post" target="_blank">
+    <label class="label" for="signup-email" style="color:inherit;opacity:.8">Email address</label>
+    <div class="row">
+      <input type="email" name="email" id="signup-email" required autocomplete="email" placeholder="you@example.com">
+      <button type="submit">Subscribe</button>
+    </div>
+    <input type="hidden" name="embed" value="1">
+    <small>Free. One email a week. Unsubscribe anytime.</small>
+    <p class="ok" id="signup-ok" hidden>Check your inbox to confirm your subscription.</p>
+  </form>
 </section>
 
 <section style="display:flex;flex-direction:column;gap:0">
@@ -256,6 +314,11 @@ const FALLBACK = [{"a":"326 Shore Dr","c":"Fort Myers","s":"FL","z":"33905","b":
     }).join("");
   }
   ["f-state","f-max","f-who"].forEach(id => $(id).addEventListener("change", render));
+  // Count listing clicks (a demand signal) when analytics is on.
+  lots.addEventListener("click", e => {
+    const a = e.target.closest("a"); if (!a || !window.goatcounter || !window.goatcounter.count) return;
+    window.goatcounter.count({ path: "click-" + (a.classList.contains("pri") ? "listing" : "zillow"), title: "Listing click", event: true });
+  });
   document.querySelectorAll(".seg button").forEach(b => b.addEventListener("click", () => {
     sort = b.dataset.sort;
     document.querySelectorAll(".seg button").forEach(x => x.setAttribute("aria-pressed", x === b));
@@ -311,6 +374,19 @@ const FALLBACK = [{"a":"326 Shore Dr","c":"Fort Myers","s":"FL","z":"33905","b":
   $("trend-note").textContent = history.length < 3
     ? "A new reading is added every morning, always from the same 40 cities so the days compare. Give it a week or two before reading much into the direction."
     : "Rising lines mean more builders are cutting, and cutting deeper. Each reading rescans the same 40 cities.";
+})();
+
+// Weekly email signup (Buttondown). Hidden until window.SITE.buttondown is set.
+(function(){
+  const user = window.SITE && window.SITE.buttondown;
+  if (!user) return;
+  const sec = document.getElementById("signup"), form = document.getElementById("signup-form");
+  form.action = "https://buttondown.com/api/emails/embed-subscribe/" + encodeURIComponent(user);
+  sec.hidden = false;
+  form.addEventListener("submit", () => {
+    if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: "signup", title: "Email signup", event: true });
+    setTimeout(() => { document.getElementById("signup-ok").hidden = false; }, 300);
+  });
 })();
 </script>
 

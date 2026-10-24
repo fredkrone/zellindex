@@ -17,11 +17,13 @@ scanner/
   run.js         daily scan: list homes → read price histories → update site/data.json
   analyze.js     the math: markdown from the high, glitch filters, daily summary, list picks
   merge.js       adds today's reading to history; refuses readings that look broken
+  weekly-email.js  builds the weekly email from site/data.json
   cities.js      CORE (trend, never edit) and EXTRA (coverage, safe to add) cities
   sources/       data sources; see sources/README.md
 test/            node --test unit tests for the math
 .github/workflows/
   pages.yml      publishes site/ to GitHub Pages on every push to main
+  weekly-email.yml  Monday "house of the week" email via Buttondown
   scan.yml       daily scan in GitHub Actions (off until a licensed source is set)
 ```
 
@@ -34,6 +36,14 @@ npm test                 # check the math
 SOURCE=redfin npm run scan   # ~30 min; updates site/data.json
 npm run serve            # view at http://localhost:8080
 ```
+
+## Switching on analytics and the weekly email
+
+Both are off until configured, so the site works without them.
+
+1. **Analytics (GoatCounter, free):** create a site at goatcounter.com, then set `goatcounter: "<your code>"` in the `window.SITE` block near the top of `site/index.html`. It counts page views, email signups and listing clicks. No cookie banner needed.
+2. **Email signup (Buttondown):** create an account at buttondown.com, then set `buttondown: "<your username>"` in the same block. The signup form appears on the page.
+3. **Weekly email:** add a repository secret `BUTTONDOWN_API_KEY` (Buttondown → Settings → API). Every Monday the *Weekly email* workflow creates a "house of the week" draft in Buttondown for you to review and send. Add a repository variable `BUTTONDOWN_SEND` = `1` to send automatically. Preview it any time with `node scanner/weekly-email.js` (writes `email-preview.md`).
 
 ## How the markdown is measured
 

@@ -1,0 +1,39 @@
+name: Weekly email
+
+# Every Monday morning, builds the "house of the week" email from site/data.json.
+# Setup: add a repository secret BUTTONDOWN_API_KEY (Buttondown → Settings → API).
+# By default the email is created as a DRAFT in Buttondown for you to review and send.
+# To send automatically, add a repository variable BUTTONDOWN_SEND = 1.
+
+on:
+  schedule:
+    - cron: "13 15 * * 1"   # Mondays, 8:13 a.m. Pacific (daylight time)
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  email:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Build and queue the email
+        env:
+          BUTTONDOWN_API_KEY: ${{ secrets.BUTTONDOWN_API_KEY }}
+          BUTTONDOWN_SEND: ${{ vars.BUTTONDOWN_SEND }}
+        run: node scanner/weekly-email.js
+      - name: Upload preview
+        uses: actions/upload-artifact@v4
+        with:
+          name: email-preview
+          path: email-preview.md
+      - name: Remember the featured home
+        run: |
+          git config user.name "gravedancing-bot"
+          git config user.email "gravedancing-bot@users.noreply.github.com"
+          git add site/featured.json 2>/dev/null || true
+          git diff --cached --quiet || (git commit -m "Featured home $(date -u +%F)" && git pull --rebase -q origin main && git push)
