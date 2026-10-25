@@ -17,7 +17,7 @@
 <meta name="twitter:title" content="The Grave Dancer's List">
 <meta name="twitter:description" content="New-construction homes with the deepest price cuts from their peak asking price, across 105 U.S. cities. Updated every morning, with a daily index of how many builders are cutting.">
 <meta name="twitter:image" content="https://fredkrone.github.io/zellindex/og.png">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231B221E'/%3E%3Cpath d='M6 10h20M6 16h14M6 22h8' stroke='%23F0628F' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231B221E'/%3E%3Cpath d='M6 10h20M6 16h14M6 22h8' stroke='%23FF5A4B' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E">
 <script>
   // Site settings. Fill these in to switch features on; leave "" to keep them off.
   window.SITE = {
@@ -35,20 +35,20 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <style>
-/* Layout: a builder's plat sheet. Each listing is a numbered lot; the survey-flag pink marks how much of the asking price has fallen away. */
+/* Layout: a builder's plat sheet. Each listing is a numbered lot; the survey-flag red marks how much of the asking price has fallen away. */
 :root{
   --bg:#ECEFEA; --paper:#F7F8F4; --ink:#1B221E; --muted:#58645D; --rule:#C6CDC6;
-  --flag:#B8174F; --flag-soft:#F4D6E0; --kept:#8FA096; --link:#1D5C8C;
+  --flag:#D21F17; --flag-text:#C11B14; --on-flag:#FFFFFF; --flag-soft:#F8DAD6; --kept:#8FA096; --link:#1D5C8C;
   --display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
   --body:"Source Serif 4",Georgia,"Times New Roman",serif;
   --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#121714; --paper:#1A211D; --ink:#E3E8E2; --muted:#98A59D; --rule:#2E3832;
-  --flag:#F0628F; --flag-soft:#4A1F2E; --kept:#56665D; --link:#8CC2EC; color-scheme:dark}}
+  --flag:#FF5A4B; --flag-text:#FF6E60; --on-flag:#1B221E; --flag-soft:#4C1D18; --kept:#56665D; --link:#8CC2EC; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#121714; --paper:#1A211D; --ink:#E3E8E2; --muted:#98A59D; --rule:#2E3832;
-  --flag:#F0628F; --flag-soft:#4A1F2E; --kept:#56665D; --link:#8CC2EC; color-scheme:dark}
+  --flag:#FF5A4B; --flag-text:#FF6E60; --on-flag:#1B221E; --flag-soft:#4C1D18; --kept:#56665D; --link:#8CC2EC; color-scheme:dark}
 
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;
@@ -63,7 +63,7 @@ a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible{ou
 
 header{display:grid;grid-template-columns:1.25fr 1fr;gap:36px;align-items:end}
 header h1{font-size:clamp(3.4rem,10vw,7rem);font-weight:900}
-header h1 em{font-style:normal;color:var(--flag)}
+header h1 em{font-style:normal;color:var(--flag-text)}
 .intro{display:flex;flex-direction:column;gap:14px;min-width:0}
 .tape{height:12px;background:repeating-linear-gradient(-45deg,var(--flag) 0 12px,transparent 12px 24px)}
 
@@ -71,11 +71,11 @@ header h1 em{font-style:normal;color:var(--flag)}
 .stat{padding:16px 18px;display:flex;flex-direction:column;gap:4px;border-right:1px solid var(--rule);min-width:0}
 .stat:last-child{border-right:0}
 .stat .v{font-family:var(--display);font-size:2.5rem;font-weight:800;line-height:1}
-.stat .v.hot{color:var(--flag)}
+.stat .v.hot{color:var(--flag-text)}
 .stat .d{font-size:.86rem;color:var(--muted);line-height:1.4}
 
 .delta{font-family:var(--mono);font-size:.74rem;color:var(--muted)}
-.delta.up{color:var(--flag);font-weight:600}
+.delta.up{color:var(--flag-text);font-weight:600}
 .delta.down{color:var(--link);font-weight:600}
 .trend{display:flex;flex-direction:column;gap:16px;border-top:2px solid var(--ink);padding-top:16px}
 .trend-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
@@ -94,7 +94,7 @@ header h1 em{font-style:normal;color:var(--flag)}
 .signup form{display:flex;flex-direction:column;gap:10px;min-width:0}
 .signup .row{display:flex;gap:8px;flex-wrap:wrap}
 .signup input[type=email]{flex:1 1 220px;min-width:0;font:500 1rem var(--mono);padding:12px 14px;border:1px solid var(--bg);background:var(--bg);color:var(--ink)}
-.signup button{font:700 .82rem var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:12px 18px;border:0;background:var(--flag);color:#fff;cursor:pointer}
+.signup button{font:700 .82rem var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:12px 18px;border:0;background:var(--flag);color:var(--on-flag);cursor:pointer}
 .signup button:hover{filter:brightness(1.1)}
 .signup small{font-family:var(--mono);font-size:.72rem;opacity:.7}
 .signup .ok{font-family:var(--mono);font-size:.85rem;color:var(--bg)}
@@ -110,7 +110,7 @@ header h1 em{font-style:normal;color:var(--flag)}
 .lots{display:flex;flex-direction:column;border-top:1px solid var(--rule)}
 .lot{display:grid;grid-template-columns:52px 120px minmax(0,1fr) 200px;gap:20px;padding:18px 0;border-bottom:1px solid var(--rule);align-items:start}
 .lot .rk{font-family:var(--display);font-size:1.6rem;font-weight:800;color:var(--muted);line-height:1}
-.lot .pct{font-family:var(--display);font-weight:900;font-size:3rem;line-height:.85;color:var(--flag)}
+.lot .pct{font-family:var(--display);font-weight:900;font-size:3rem;line-height:.85;color:var(--flag-text)}
 .lot .pct small{display:block;font-family:var(--mono);font-size:.68rem;font-weight:500;color:var(--muted);letter-spacing:.08em;margin-top:6px;text-transform:uppercase}
 .info{display:flex;flex-direction:column;gap:7px;min-width:0}
 .addr{font-weight:600;font-size:1.12rem;line-height:1.25}
@@ -122,12 +122,12 @@ header h1 em{font-style:normal;color:var(--flag)}
 .prices{display:flex;justify-content:space-between;gap:10px;font-family:var(--mono);font-size:.8rem;flex-wrap:wrap}
 .prices .now{font-weight:600;color:var(--ink)}
 .prices .was{color:var(--muted);text-decoration:line-through}
-.prices .off{color:var(--flag);font-weight:600}
+.prices .off{color:var(--flag-text);font-weight:600}
 .links{display:flex;flex-direction:column;gap:8px}
 .links a{display:flex;justify-content:space-between;align-items:center;gap:8px;font:600 .78rem var(--mono);letter-spacing:.05em;text-transform:uppercase;text-decoration:none;padding:9px 12px;border:1px solid var(--ink);color:var(--ink)}
 .links a:hover{background:var(--ink);color:var(--bg)}
 .links a.pri{background:var(--ink);color:var(--bg)}
-.links a.pri:hover{background:var(--flag);border-color:var(--flag)}
+.links a.pri:hover{background:var(--flag);border-color:var(--flag);color:var(--on-flag)}
 .empty{padding:28px 0;color:var(--muted)}
 
 .notes{display:grid;grid-template-columns:1fr 1fr;gap:32px;border-top:2px solid var(--ink);padding-top:18px}
