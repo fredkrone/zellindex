@@ -4,6 +4,7 @@ Grave dancing is buying from a seller who has to sell. This project finds new-co
 
 **What it shows**
 - **The list:** active new homes with the deepest markdowns from their highest asking price, linked to the listing and to Zillow.
+- **Sold & under contract:** every home that has appeared on the list is followed until it sells: when it went under contract, at what asking price, and the sale price where the state publishes it (Texas and Idaho don't).
 - **The trend:** three numbers recorded every day, always from the same 40 cities so days compare.
   - The typical (median) cut among homes that have been cut
   - How many homes are 10%+ below their peak
@@ -12,7 +13,7 @@ Grave dancing is buying from a seller who has to sell. This project finds new-co
 ## Layout
 
 ```
-site/            the web page (static: index.html + data.json)
+site/            the web page (static: index.html + data.json, results.json, markets.json, weekly notes)
 scanner/
   run.js         daily scan: list homes → read price histories → update site/data.json
   analyze.js     the math: markdown from the high, glitch filters, daily summary, list picks

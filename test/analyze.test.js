@@ -60,3 +60,19 @@ test("an unfinished basement does not make a home unlistable", () => {
   assert.equal(isListable(Object.assign({}, r, { home: { yearBuilt: 2026, remarks: "Deluxe bath with double sinks; an unfinished basement; a covered patio." } })), true);
   assert.equal(isListable(Object.assign({}, r, { home: { yearBuilt: 2026, remarks: "NEW CONSTRUCTION OPPORTUNITY – SOLD AS-IS AT CURRENT STAGE OF COMPLETION." } })), false);
 });
+
+test("outcomes: contract, sale with price, sale without price, relist", () => {
+  const { outcome } = require("../scanner/analyze");
+  const t = d => Date.parse(d + "T12:00:00Z");
+  const base = { firstSeen: "2026-10-24", priceSeen: 500000, lastList: 500000 };
+  let o = outcome(base, [[t("2026-10-30"), "Price Changed", 480000], [t("2026-11-04"), "Pending", null]]);
+  assert.deepEqual([o.status, o.pendingDate, o.lastList], ["pending", "2026-11-04", 480000]);
+  o = outcome(base, [[t("2026-11-04"), "Pending", null], [t("2026-12-01"), "Sold (MLS)", 470000]]);
+  assert.deepEqual([o.status, o.soldDate, o.soldPrice], ["sold", "2026-12-01", 470000]);
+  o = outcome(base, [[t("2026-11-04"), "Pending", null], [t("2026-12-01"), "Sold (MLS)", null]]);
+  assert.deepEqual([o.status, o.soldPrice], ["sold", null]);
+  o = outcome(base, [[t("2026-11-04"), "Pending", null], [t("2026-11-20"), "Relisted", null]]);
+  assert.equal(o.status, "active");
+  o = outcome(base, [[t("2025-01-01"), "Sold (Public Records)", 90000]]);
+  assert.equal(o.status, "active");
+});

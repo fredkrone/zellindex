@@ -75,6 +75,29 @@ function promo(text) {
   return out;
 }
 
+// What happened to a home after it first appeared on the list: still for sale, under contract, sold, or pulled.
+const isoDay = t => new Date(t).toISOString().slice(0, 10);
+function outcome(entry, ev) {
+  const since = Date.parse(entry.firstSeen + "T00:00:00Z") - 3 * 864e5;
+  const evs = ev.filter(e => e[0] >= since && !/rent/i.test(e[1])).sort((a, b) => a[0] - b[0]);
+  let status = "active", pendingDate = null, soldDate = null, soldPrice = null, offDate = null, lastList = entry.lastList || entry.priceSeen;
+  let mlsSold = null, prSold = null;
+  for (const [t, d, p] of evs) {
+    const day = isoDay(t);
+    if (/^sold/i.test(d)) { status = "sold"; soldDate = soldDate || day; if (p) { if (/mls/i.test(d)) mlsSold = p; else prSold = p; } continue; }
+    if (status === "sold") continue;
+    if (/pending|contingent/i.test(d)) { if (status !== "pending") pendingDate = day; status = "pending"; }
+    else if (/^(listed|relisted)$/i.test(d)) { status = "active"; pendingDate = null; offDate = null; if (p) lastList = p; }
+    else if (/price changed/i.test(d)) { if (p) lastList = p; if (status === "off") { status = "active"; offDate = null; } }
+    else if (/listing removed|delisted/i.test(d)) { if (status !== "pending") { status = "off"; offDate = day; } }
+  }
+  soldPrice = mlsSold || prSold;
+  // A public-record price far from the asking price is usually a bulk or land transfer, not this sale.
+  if (soldPrice && (soldPrice < lastList * 0.6 || soldPrice > lastList * 1.4)) soldPrice = null;
+  if (status === "sold" && !pendingDate) pendingDate = entry.pendingDate || null;
+  return { status, pendingDate, soldDate, soldPrice, offDate, lastList };
+}
+
 /** Headline numbers for a set of analyzed listings. */
 function summarize(rows) {
   const valid = rows.filter(r => r.pct < 60); // >60% off is almost always a data error
@@ -141,4 +164,4 @@ function buildDay(rows, { date, scannedCore, scannedAll, coreCities, allCities, 
   return { date, metrics, homes: pickHomes(rows) };
 }
 
-module.exports = { analyzeHistory, summarize, isListable, pickHomes, buildDay, median, promo };
+module.exports = { analyzeHistory, summarize, isListable, pickHomes, buildDay, median, promo, outcome };

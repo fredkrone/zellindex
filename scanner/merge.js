@@ -35,7 +35,15 @@ function describe(data) {
   return `${m.date}: typical cut ${m.medianCut}%${d("medianCut", true)}, down 10%+ ${m.down10}${d("down10")}, down 20%+ ${m.down20}${d("down20")}; ${data.homes.length} homes listed; ${h.length} readings`;
 }
 
-module.exports = { merge, check, describe };
+/** Fold today's outcome updates into the tracked-homes file. */
+function mergeResults(prev, updates, date) {
+  const byPath = new Map(((prev && prev.homes) || []).map(h => [h.path, h]));
+  (updates || []).forEach(h => byPath.set(h.path, Object.assign({}, byPath.get(h.path) || {}, h)));
+  const homes = [...byPath.values()].sort((a, b) => (b.pendingDate || b.firstSeen || "").localeCompare(a.pendingDate || a.firstSeen || ""));
+  return { updated: date, homes };
+}
+
+module.exports = { merge, check, describe, mergeResults };
 
 // CLI: node scanner/merge.js <prev data.json|-> <today.json> <out data.json>
 if (require.main === module) {

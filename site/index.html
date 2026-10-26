@@ -108,6 +108,23 @@ header h1 em{font-style:normal;color:var(--flag-text)}
 .signup small{font-family:var(--mono);font-size:.72rem;opacity:.7}
 .signup .ok{font-family:var(--mono);font-size:.85rem;color:var(--bg)}
 @media (max-width:820px){.signup{grid-template-columns:1fr}}
+.tabs{display:flex;flex-wrap:wrap;gap:0;border-bottom:2px solid var(--ink)}
+.tabs button{font:800 clamp(1.05rem,2.6vw,1.35rem) var(--display);text-transform:uppercase;letter-spacing:.02em;padding:12px 18px 10px;border:2px solid var(--ink);border-bottom:0;margin-right:-2px;background:transparent;color:var(--ink);cursor:pointer;display:flex;align-items:center;gap:8px}
+.tabs button[aria-selected="true"]{background:var(--ink);color:var(--bg)}
+.tabs button:hover:not([aria-selected="true"]){background:var(--paper)}
+.tabn{font:600 .72rem var(--mono);letter-spacing:.04em;padding:2px 7px;background:var(--flag);color:var(--on-flag)}
+.tabn:empty{display:none}
+#panel-list .controls{border-top:0}
+.results{display:flex;flex-direction:column;gap:26px;padding-top:20px}
+.lede-sm{font-size:1rem;max-width:70ch}
+.rgroup{display:flex;flex-direction:column;gap:10px}
+.rgroup h3{font-size:1.5rem;font-weight:800;border-bottom:2px solid var(--ink);padding-bottom:6px}
+.chip{display:inline-block;font:700 .66rem var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:3px 7px;line-height:1.2}
+.chip.sold{background:var(--ink);color:var(--bg)}
+.chip.pending{border:1.5px solid var(--flag);color:var(--flag-text)}
+.outcome{font-size:.95rem;line-height:1.45}
+.outcome b{font-family:var(--mono);font-weight:600}
+.empty-r{padding:16px 0;color:var(--muted);border-bottom:1px solid var(--rule)}
 .controls{display:flex;flex-wrap:wrap;gap:14px 20px;align-items:end;border-top:2px solid var(--ink);padding-top:16px}
 .ctl{display:flex;flex-direction:column;gap:6px}
 .ctl select,.ctl input[type=number]{font:500 .9rem var(--mono);padding:8px 10px;border:1px solid var(--rule);background:var(--paper);color:var(--ink);min-width:9rem}
@@ -160,6 +177,7 @@ footer{font-size:.82rem;color:var(--muted)}
   .links{flex-direction:row;flex-wrap:wrap}
   .links a{flex:1 1 120px}
   .count{margin-left:0;width:100%}
+  .tabs button{flex:1 1 auto;justify-content:center;padding:10px 10px 8px}
 }
 </style>
 </head><body>
@@ -300,7 +318,12 @@ footer{font-size:.82rem;color:var(--muted)}
   </form>
 </section>
 
-<section style="display:flex;flex-direction:column;gap:0">
+<nav class="tabs" role="tablist" aria-label="Views">
+  <button type="button" role="tab" id="tab-list" aria-selected="true" aria-controls="panel-list">The graveyard</button>
+  <button type="button" role="tab" id="tab-results" aria-selected="false" aria-controls="panel-results">Sold &amp; under contract <span class="tabn" id="n-results"></span></button>
+</nav>
+
+<section id="panel-list" role="tabpanel" aria-labelledby="tab-list" style="display:flex;flex-direction:column;gap:0">
   <div class="controls">
     <div class="ctl"><label class="label" for="f-state">State</label><select id="f-state"><option value="">All states</option></select></div>
     <div class="ctl"><label class="label" for="f-max">Max price</label><select id="f-max"><option value="">Any</option><option value="300000">$300k</option><option value="400000">$400k</option><option value="500000">$500k</option><option value="750000">$750k</option><option value="1000000">$1M</option></select></div>
@@ -314,6 +337,26 @@ footer{font-size:.82rem;color:var(--muted)}
   </div>
   <p class="note" id="state-stats" style="padding-block:10px 0"></p>
   <div class="lots" id="lots"></div>
+</section>
+
+
+<section class="results" id="panel-results" role="tabpanel" aria-labelledby="tab-results" hidden>
+  <p class="lede-sm">Every home that appears on the list is followed until it sells. When a builder accepts an offer, it shows up here, with the price it went under contract at and, where the state makes it public, what it actually sold for.</p>
+  <div class="stats rstats">
+    <div class="stat"><span class="label">Homes followed</span><span class="v num" id="r-tracked">—</span><span class="d">Every home that has been on the list since Oct 24, 2026</span></div>
+    <div class="stat"><span class="label">Under contract</span><span class="v num" id="r-pending">—</span><span class="d">An offer accepted, sale not closed yet</span></div>
+    <div class="stat"><span class="label">Sold</span><span class="v num" id="r-sold">—</span><span class="d">Closed sales</span></div>
+    <div class="stat"><span class="label">Typical discount</span><span class="v hot num" id="r-disc">—</span><span class="d" id="r-disc-d">Below peak asking, at contract or sale</span></div>
+  </div>
+  <div class="rgroup">
+    <h3>Sold</h3>
+    <div class="lots" id="res-sold"></div>
+  </div>
+  <div class="rgroup">
+    <h3>Under contract</h3>
+    <div class="lots" id="res-pending"></div>
+  </div>
+  <p class="note" id="res-foot"></p>
 </section>
 
 <section class="notes">
@@ -486,6 +529,82 @@ const FALLBACK = [{"a":"326 Shore Dr","c":"Fort Myers","s":"FL","z":"33905","b":
     if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: "signup", title: "Email signup", event: true });
     setTimeout(() => { document.getElementById("signup-ok").hidden = false; }, 300);
   });
+})();
+
+// ---- Sold & under contract tab ----
+(async function(){
+  const $ = id => document.getElementById(id);
+  const tabs = { list: $("tab-list"), results: $("tab-results") }, panels = { list: $("panel-list"), results: $("panel-results") };
+  function show(which, push){
+    Object.keys(tabs).forEach(k => { tabs[k].setAttribute("aria-selected", k === which); panels[k].hidden = k !== which; });
+    if (push) { try { history.replaceState(null, "", which === "results" ? "#results" : location.pathname + location.search); } catch (e) {} }
+  }
+  tabs.list.addEventListener("click", () => show("list", true));
+  tabs.results.addEventListener("click", () => show("results", true));
+  [tabs.list, tabs.results].forEach((t, i, all) => t.addEventListener("keydown", e => {
+    if (e.key === "ArrowRight" || e.key === "ArrowLeft") { const n = all[(i + (e.key === "ArrowRight" ? 1 : all.length - 1)) % all.length]; n.focus(); n.click(); }
+  }));
+  if (location.hash === "#results") show("results", false);
+
+  let data = null;
+  try { const r = await fetch("results.json", { cache: "no-store" }); if (r.ok) data = await r.json(); } catch (e) {}
+  const homes = (data && data.homes) || [];
+  const fmt = n => Number(n).toLocaleString("en-US");
+  const full = n => "$" + Number(n).toLocaleString("en-US");
+  const MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  const day = d => { const [y, m, dd] = d.split("-"); return MON[+m-1] + " " + (+dd) + ", " + y; };
+  const mon = d => { const [y, m] = d.split("-"); return MON[+m-1] + " " + y; };
+  const days = (a, b) => Math.max(0, Math.round((Date.parse(b) - Date.parse(a)) / 864e5));
+  const esc = s => String(s == null ? "" : s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  const title = s => s && s === s.toUpperCase() ? s.toLowerCase().replace(/\b\w/g, c => c.toUpperCase()) : s;
+  const median = a => { const s = a.slice().sort((x, y) => x - y); return s.length ? (s.length % 2 ? s[(s.length - 1) / 2] : (s[s.length / 2 - 1] + s[s.length / 2]) / 2) : null; };
+  const zillow = h => "https://www.zillow.com/homes/" + encodeURIComponent((h.a.replace("#", "Unit ") + " " + h.c + " " + h.s + " " + h.z).replace(/\s+/g, "-")) + "_rb/";
+
+  const sold = homes.filter(h => h.status === "sold").sort((a, b) => (b.soldDate || "").localeCompare(a.soldDate || ""));
+  const pending = homes.filter(h => h.status === "pending").sort((a, b) => (b.pendingDate || "").localeCompare(a.pendingDate || ""));
+  const off = homes.filter(h => h.status === "off");
+  const done = sold.concat(pending);
+  const discount = h => (h.peak - (h.soldPrice || h.lastList)) / h.peak * 100;
+
+  $("n-results").textContent = done.length ? String(done.length) : "";
+  $("r-tracked").textContent = homes.length ? fmt(homes.length) : "—";
+  $("r-pending").textContent = fmt(pending.length);
+  $("r-sold").textContent = fmt(sold.length);
+  const md = median(done.map(discount));
+  $("r-disc").textContent = md == null ? "—" : md.toFixed(1) + "%";
+  const ttc = median(done.filter(h => h.pendingDate).map(h => days(h.firstSeen, h.pendingDate)));
+  if (ttc != null) $("r-disc-d").textContent = "Below peak asking, at contract or sale. Typically " + ttc + " days after it hit our list.";
+
+  function card(h){
+    const isSold = h.status === "sold";
+    const price = isSold && h.soldPrice ? h.soldPrice : h.lastList;
+    const pct = discount(h);
+    const bld = h.bld ? esc(title(h.bld)) : "Custom or small builder";
+    const what = isSold
+      ? (h.soldPrice ? "Sold for <b>" + full(h.soldPrice) + "</b> on " + day(h.soldDate) : "Sold " + day(h.soldDate) + ". Sale price not disclosed (" + esc(h.s) + " doesn't publish them); last asking price <b>" + full(h.lastList) + "</b>")
+      : "Under contract since " + day(h.pendingDate) + " at <b>" + full(h.lastList) + "</b> asking";
+    const dd = h.pendingDate ? days(h.firstSeen, h.pendingDate) : null;
+    const when = dd == null ? "" : " · Under contract " + (dd === 0 ? "the same day it hit our list" : dd + (dd === 1 ? " day" : " days") + " after it hit our list");
+    const pctLabel = isSold && h.soldPrice ? "sold below peak" : "below peak at contract";
+    return '<article class="lot">' +
+      '<span><span class="chip ' + (isSold ? "sold" : "pending") + '">' + (isSold ? "Sold" : "Pending") + '</span></span>' +
+      '<div class="pct num">' + pct.toFixed(1) + '%<small>' + pctLabel + '</small></div>' +
+      '<div class="info">' +
+        '<div class="addr">' + esc(h.a) + ' <span>' + esc(h.c) + ', ' + esc(h.s) + ' ' + esc(h.z) + '</span></div>' +
+        '<div class="outcome">' + what + '.</div>' +
+        '<div class="facts">Peak ' + full(h.peak) + (h.peakDate ? ' (' + mon(h.peakDate) + ')' : '') + ' · On our list ' + day(h.firstSeen) + ' at ' + full(h.priceSeen) + '</div>' +
+        '<div class="bld">' + bld + when + '</div>' +
+        '<div class="bar" role="img" aria-label="' + (100 - pct).toFixed(1) + '% of peak price"><i style="width:' + (100 - pct).toFixed(1) + '%"></i></div>' +
+      '</div>' +
+      '<div class="links">' +
+        '<a class="pri" href="' + esc(/^https?:/.test(h.path) ? h.path : "https://www.redfin.com" + h.path) + '" target="_blank" rel="noopener">Listing <span aria-hidden="true">↗</span></a>' +
+        '<a href="' + zillow(h) + '" target="_blank" rel="noopener">Zillow <span aria-hidden="true">↗</span></a>' +
+      '</div>' +
+    '</article>';
+  }
+  $("res-sold").innerHTML = sold.length ? sold.map(card).join("") : '<p class="empty-r">Nothing from the list has closed yet. New-build sales usually close 30 to 60 days after the contract.</p>';
+  $("res-pending").innerHTML = pending.length ? pending.map(card).join("") : '<p class="empty-r">No contracts yet. Homes move here the day a builder accepts an offer.</p>';
+  $("res-foot").textContent = (off.length ? off.length + (off.length === 1 ? " home was" : " homes were") + " pulled off the market without a sale. " : "") + (data && data.updated ? "Statuses checked every morning; last check " + day(data.updated) + "." : "");
 })();
 </script>
 

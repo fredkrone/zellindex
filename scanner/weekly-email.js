@@ -15,6 +15,7 @@ const SITE = "https://fredkrone.github.io/zellindex/";
 const DATA = path.join(ROOT, "site", "data.json");
 const MARKETS = path.join(ROOT, "site", "markets.json");
 const FEATURED = path.join(ROOT, "site", "featured.json");
+const RESULTS = path.join(ROOT, "site", "results.json");
 const WEEKLY = path.join(ROOT, "site", "weekly");
 const REPEAT_WEEKS = 8; // don't feature the same home twice within this many weeks
 
@@ -55,7 +56,8 @@ function load() {
     .sort((a, b) => b.pct - a.pct);
   const featured = fs.existsSync(FEATURED) ? JSON.parse(fs.readFileSync(FEATURED, "utf8")) : [];
   const markets = fs.existsSync(MARKETS) ? JSON.parse(fs.readFileSync(MARKETS, "utf8")) : { days: [] };
-  return { data, homes, featured, markets };
+  const results = fs.existsSync(RESULTS) ? JSON.parse(fs.readFileSync(RESULTS, "utf8")) : { homes: [] };
+  return { data, homes, featured, markets, results };
 }
 
 function pick(homes, featured, today) {
@@ -136,6 +138,28 @@ function marketSection(h, m, note) {
   return lines.join("\n");
 }
 
+/** Homes from the list that went under contract or sold in the past week. */
+function outcomesSection(ctx, today) {
+  const since = addDays(today, -7);
+  const homes = (ctx.results.homes || []);
+  const recent = homes.filter(h => (h.status === "sold" && h.soldDate >= since) || (h.status === "pending" && h.pendingDate >= since))
+    .sort((a, b) => ((b.soldDate || b.pendingDate) || "").localeCompare((a.soldDate || a.pendingDate) || ""));
+  const all = homes.filter(h => h.status === "pending" || h.status === "sold");
+  if (!recent.length && !all.length) return "";
+  const pct = h => ((h.peak - (h.soldPrice || h.lastList)) / h.peak * 100).toFixed(0);
+  const line = h => {
+    const where = `[${h.a}, ${h.c}, ${h.s}](${link(h.path)})`;
+    const bld = h.bld ? ` (${title(h.bld)})` : "";
+    if (h.status === "sold") return `- **Sold:** ${where}${bld}` + (h.soldPrice ? ` for ${money(h.soldPrice)}, ${pct(h)}% below its ${short(h.peak)} peak` : `, price not disclosed; last asking ${money(h.lastList)}, ${pct(h)}% below peak`);
+    return `- **Under contract:** ${where}${bld} at ${money(h.lastList)} asking, ${pct(h)}% below its ${short(h.peak)} peak`;
+  };
+  const out = ["### Out of the graveyard", ""];
+  if (recent.length) out.push(`Homes from our list that found a buyer this week:`, "", ...recent.slice(0, 6).map(line), "");
+  else out.push("No new contracts on homes from our list this week.", "");
+  out.push(`So far, ${all.length} of the ${num(homes.length)} homes we've listed ${all.length === 1 ? "has" : "have"} gone under contract or sold. [See them all](${SITE}#results)`, "");
+  return out.join("\n");
+}
+
 function build(ctx) {
   const today = pacificToday();
   const note = findNote(today);
@@ -162,6 +186,7 @@ ${facts}
 [See the listing](${link(h.path)}) · [On Zillow](${zillow(h)})
 
 ${marketSection(h, m, usedNote ? note : null)}
+${outcomesSection(ctx, today)}
 ---
 
 ### Are builder cuts spreading nationally?
