@@ -117,6 +117,8 @@ header h1 em{font-style:normal;color:var(--flag-text)}
 .addr span{font-weight:400;color:var(--muted)}
 .facts{font-family:var(--mono);font-size:.78rem;color:var(--muted)}
 .bld{font-size:.9rem}
+.promo{font-size:.86rem;line-height:1.4;padding:6px 10px;border-left:3px solid var(--flag);background:var(--paper)}
+.promo b{font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--flag-text)}
 .bar{position:relative;height:16px;background:var(--flag-soft);border:1px solid var(--rule)}
 .bar i{position:absolute;inset:0 auto 0 0;background:var(--kept)}
 .prices{display:flex;justify-content:space-between;gap:10px;font-family:var(--mono);font-size:.8rem;flex-wrap:wrap}
@@ -262,7 +264,7 @@ const FALLBACK = [{"a":"326 Shore Dr","c":"Fort Myers","s":"FL","z":"33905","b":
   let data = null;
   try { const r = await fetch("data.json", { cache: "no-store" }); if (r.ok) data = await r.json(); } catch (e) {}
   const HOMES = data && Array.isArray(data.homes) && data.homes.length
-    ? data.homes.map(a => ({ a:a[0], c:a[1], s:a[2], z:a[3], b:a[4], ba:a[5], sf:a[6], y:a[7], cur:a[8], hi:a[9], hd:a[10], cuts:a[11], bld:titleCase(a[12]), u:a[13] }))
+    ? data.homes.map(a => ({ a:a[0], c:a[1], s:a[2], z:a[3], b:a[4], ba:a[5], sf:a[6], y:a[7], cur:a[8], hi:a[9], hd:a[10], cuts:a[11], bld:titleCase(a[12]), u:a[13], promo:a[14] || null, com:a[16] || null }))
     : FALLBACK;
   const history = (data && data.history) || [];
   const latest = history.length ? history[history.length - 1] : null;
@@ -303,6 +305,7 @@ const FALLBACK = [{"a":"326 Shore Dr","c":"Fort Myers","s":"FL","z":"33905","b":
           '<div class="addr">' + esc(h.a) + ' <span>' + esc(h.c) + ', ' + esc(h.s) + ' ' + esc(h.z) + '</span></div>' +
           '<div class="facts">' + facts + '</div>' +
           '<div class="bld">' + who + '</div>' +
+          (h.promo ? '<div class="promo"><b>Incentive:</b> ' + esc(h.promo) + '</div>' : '') +
           '<div class="bar" role="img" aria-label="Now ' + keep + '% of peak price"><i style="width:' + keep + '%"></i></div>' +
           '<div class="prices"><span><span class="was">' + full(h.hi) + '</span> peak' + (when(h.hd) ? ', ' + when(h.hd) : '') + '</span><span class="now">Now ' + full(h.cur) + '</span><span class="off">−' + usd(h.off) + '</span></div>' +
         '</div>' +

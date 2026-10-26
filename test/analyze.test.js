@@ -39,3 +39,24 @@ test("summary counts cut depths and drops implausible >60% rows", () => {
   const s = summarize([{ pct: 0 }, { pct: 5 }, { pct: 12 }, { pct: 25 }, { pct: 90 }]);
   assert.deepEqual(s, { withHistory: 4, cutCount: 3, medianCut: 12, down10: 2, down20: 1 });
 });
+
+test("incentive wording is pulled from listing descriptions", () => {
+  const { promo } = require("../scanner/analyze");
+  assert.match(promo("Ready now. 2.99% Rates (5.80% APR) * + $10,000 Toward Closing Costs! Big yard."), /2\.99% Rates.*Closing Costs/);
+  assert.equal(promo("Over $50,000 in upgrades and a huge yard."), null);
+  assert.equal(promo(null), null);
+});
+
+test("unfinished construction projects are not listable", () => {
+  const ev = [[Date.parse("2026-04-27T12:00:00Z"), "Listed", 765000], [Date.parse("2026-06-09T12:00:00Z"), "Price Changed", 699975], [Date.parse("2026-07-01T12:00:00Z"), "Price Changed", 595000], [Date.parse("2026-08-01T12:00:00Z"), "Price Changed", 529550]];
+  const r = analyzeHistory(419900, ev, Date.parse("2026-10-24T12:00:00Z"));
+  assert.equal(isListable(Object.assign({}, r, { home: { yearBuilt: 2026, remarks: "Gulf-Access Lot with Active Permits & Structural Shell Already in Place!" } })), false);
+  assert.equal(isListable(Object.assign({}, r, { home: { yearBuilt: 2026, remarks: "Move-in ready lakefront pool home." } })), true);
+});
+
+test("an unfinished basement does not make a home unlistable", () => {
+  const ev = [[Date.parse("2026-04-27T12:00:00Z"), "Listed", 765000], [Date.parse("2026-06-09T12:00:00Z"), "Price Changed", 699975], [Date.parse("2026-07-01T12:00:00Z"), "Price Changed", 595000], [Date.parse("2026-08-01T12:00:00Z"), "Price Changed", 529550]];
+  const r = analyzeHistory(419900, ev, Date.parse("2026-10-24T12:00:00Z"));
+  assert.equal(isListable(Object.assign({}, r, { home: { yearBuilt: 2026, remarks: "Deluxe bath with double sinks; an unfinished basement; a covered patio." } })), true);
+  assert.equal(isListable(Object.assign({}, r, { home: { yearBuilt: 2026, remarks: "NEW CONSTRUCTION OPPORTUNITY – SOLD AS-IS AT CURRENT STAGE OF COMPLETION." } })), false);
+});

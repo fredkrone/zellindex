@@ -6,7 +6,7 @@ A source is a module that exports:
 module.exports = {
   name: "my-source",
   // New-construction homes on the market 60+ days in one city ("Austin, TX").
-  async listCity(city) { return [{ id, address, city, state, zip, beds, baths, sqft, yearBuilt, price, builder, path }]; },
+  async listCity(city) { return [{ id, address, city, state, zip, beds, baths, sqft, yearBuilt, price, builder, community, remarks, dom, path }]; },
   // Price history for one home: [[timestampMs, "Listed" | "Price Changed" | "Relisted" | "Sold" | ..., price], ...]
   async history(home) { return [...]; }
 };

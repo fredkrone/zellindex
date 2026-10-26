@@ -1,0 +1,27 @@
+{
+  "forDate": "2026-10-26",
+  "written": "2026-10-25",
+  "house": {
+    "path": "/IN/Indianapolis/3238-Guilford-Ave-46205/home/82306561",
+    "address": "3238 Guilford Ave",
+    "city": "Indianapolis",
+    "state": "IN"
+  },
+  "market": "Indianapolis, IN",
+  "builder": "Custom infill build (listed by Maywright Property Co.)",
+  "incentives": "None advertised: the listing doesn't mention a rate buydown or closing-cost credit. After 11 price cuts and two pulled listings over two years, a seller credit is worth asking for.",
+  "rating": 2,
+  "ratingWhy": "A healthy market with one sick corner: new homes that have sat are being cut hard.",
+  "writeup": "Indianapolis isn't a distressed market. Across all sales, prices were up about 1.5% from a year earlier through mid-2026, supply sat at roughly 2.6 months, and builders report strong demand in the master-planned suburbs, helped by buyers moving in from pricier metros.\n\nThe pain is narrow but real: new homes that haven't sold. Among the 103 new-construction listings we track there that have been on the market 60+ days, the typical cut from peak is 9.1%, deeper than any state average in our scan, and 41% are down 10% or more. A lot of them look like this one: custom infill homes priced for a buyer who never showed up. This house first listed at $950,000 in October 2024, was pulled and relisted twice, and is now $529,000. That works out to about $166 a square foot for a 3,187 sq ft new build on a street that runs into the Monon Trail. Active listings across the metro were also up about 10% from a year earlier, so sellers have competition.",
+  "bottom": "For Indianapolis as a whole there's no bottom to call; prices are still edging up. For aged new builds, not yet: this seller has cut four times since August, most recently on Oct 8. Our city-level trend data is only days old, so the next few weeks will tell us whether these cuts are slowing.",
+  "sources": [
+    {
+      "title": "Redfin mid-year Indianapolis market review (via Stacker)",
+      "url": "https://stacker.com/stories/indiana/indianapolis/indianapolis-mid-year-housing-market-review"
+    },
+    {
+      "title": "Indianapolis stands out as demand outpaces a cooling market (Zonda, Builder)",
+      "url": "https://www.builderonline.com/?p=175965"
+    }
+  ]
+}

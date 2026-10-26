@@ -32,6 +32,9 @@ async function listCity(city) {
         yearBuilt: (x.yearBuilt && x.yearBuilt.value) || null,
         price: x.price && x.price.value,
         builder: (x.newConstructionCommunityInfo && x.newConstructionCommunityInfo.builderName) || null,
+        community: (x.newConstructionCommunityInfo && x.newConstructionCommunityInfo.communityName) || null,
+        remarks: x.listingRemarks || null,
+        dom: (x.dom && x.dom.value) || null,
         path: x.url
       };
     });

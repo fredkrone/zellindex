@@ -63,6 +63,18 @@ function analyzeHistory(current, events, now = Date.now()) {
   return { pct: (hi.p - current) / hi.p * 100, high: hi.p, highDate: hi.d, current, downs, ups, maxDrop, maxRise, bounce };
 }
 
+// Incentive wording from a listing description: rate buydowns, closing-cost credits, cash toward the purchase.
+const PROMO = /(\d(?:\.\d+)?\s?%\s*(?:fixed\s*|interest\s*)*rate|rate\s*buy\s*-?\s*downs?|buy\s*-?\s*downs?|closing\s*costs?|flex\s*cash|incentives?|seller\s*(?:credit|concession)s?|lender\s*credit|special\s*financing|below[- ]market\s*rate|\$\s?[\d,.]+k?\s*(?:off|toward|towards|in\s*savings|credit|flex))/i;
+function promo(text) {
+  if (!text) return null;
+  const parts = String(text).replace(/\s+/g, " ").split(/(?<=[.!?])\s+|\s[*|•~]\s|\s-\s(?=[A-Z$0-9])/);
+  const hits = parts.filter(t => PROMO.test(t)).map(t => t.replace(/^[\s*•~|!-]+|[\s*•~|]+$/g, "").trim()).filter(t => t.length > 6);
+  if (!hits.length) return null;
+  let out = hits.join(" · ");
+  if (out.length > 220) out = out.slice(0, 217).replace(/\s\S*$/, "") + "…";
+  return out;
+}
+
 /** Headline numbers for a set of analyzed listings. */
 function summarize(rows) {
   const valid = rows.filter(r => r.pct < 60); // >60% off is almost always a data error
@@ -76,10 +88,13 @@ function summarize(rows) {
   };
 }
 
-/** Is this a believable builder markdown (steady step-downs, no feed glitches)? */
+// Unfinished projects (structural shells, permits-and-lot sales) aren't move-in homes.
+const SHELL = /(structural shell|shell (home|only|in place)|decided not to complete|not to complete|unfinished (home|house|project|construction|build)|incomplete (home|construction)|current stage of completion|finish (this|the) (home|house|project)|complete the (construction|project|build)|take over (the )?(project|construction|build)|active (building )?permits|transferable permits|sold as[- ]is|being sold as[- ]is|lot with (active )?permits)/i;
+
+/** Is this a believable builder markdown (steady step-downs, no feed glitches, a finished home)? */
 function isListable(r) {
   return r.pct >= 12 && r.pct < 55 && r.downs >= 3 && r.ups <= 1 &&
-    r.maxDrop <= 0.28 && r.maxRise <= 0.15 && !r.bounce &&
+    r.maxDrop <= 0.28 && r.maxRise <= 0.15 && !r.bounce && !SHELL.test(r.home.remarks || "") &&
     (!r.home.yearBuilt || r.home.yearBuilt >= 2023);
 }
 
@@ -92,7 +107,8 @@ function pickHomes(rows, { overall = 40, perState = 10 } = {}) {
   cand.forEach(r => { count[r.home.state] = count[r.home.state] || 0; if (count[r.home.state] < perState) { count[r.home.state]++; pick.set(r.home.id, r); } });
   return [...pick.values()].sort((a, b) => b.pct - a.pct).map(r => [
     r.home.address, r.home.city, r.home.state, r.home.zip, r.home.beds, r.home.baths, r.home.sqft,
-    r.home.yearBuilt, r.current, r.high, r.highDate, r.downs, r.home.builder, r.home.path
+    r.home.yearBuilt, r.current, r.high, r.highDate, r.downs, r.home.builder, r.home.path,
+    promo(r.home.remarks), r.city || null, r.home.community || null
   ]);
 }
 
@@ -100,18 +116,29 @@ function pickHomes(rows, { overall = 40, perState = 10 } = {}) {
  * Build the day's output from analyzed rows.
  * @param rows  [{...analyzeHistory(), home: {id, address, city, state, zip, beds, baths, sqft, yearBuilt, builder, path}, core: bool}]
  */
-function buildDay(rows, { date, scannedCore, scannedAll, coreCities, allCities, cityErrors = [] }) {
+function buildDay(rows, { date, scannedCore, scannedAll, coreCities, allCities, cityNames = [], cityErrors = [] }) {
   const byState = {};
   [...new Set(rows.map(r => r.home.state))].sort().forEach(st => {
     const rs = rows.filter(r => r.home.state === st);
     byState[st] = Object.assign({ scanned: rs.length }, summarize(rs));
   });
+  const byCity = {};
+  cityNames.forEach(c => {
+    const rs = rows.filter(r => r.city === c);
+    if (!rs.length) return;
+    const sm = summarize(rs);
+    byCity[c] = Object.assign({ scanned: rs.length }, sm, {
+      cutShare: sm.withHistory ? +(sm.cutCount / sm.withHistory * 100).toFixed(1) : 0,
+      medianDom: rs.some(r => r.home.dom) ? median(rs.map(r => r.home.dom).filter(Boolean)) : null,
+      medianPrice: median(rs.map(r => r.current))
+    });
+  });
   const metrics = Object.assign({ date, scanned: scannedCore }, summarize(rows.filter(r => r.core)), {
     cities: coreCities,
     all: Object.assign({ cities: allCities, scanned: scannedAll }, summarize(rows)),
-    byState, cityErrors
+    byState, byCity, cityErrors
   });
   return { date, metrics, homes: pickHomes(rows) };
 }
 
-module.exports = { analyzeHistory, summarize, isListable, pickHomes, buildDay, median };
+module.exports = { analyzeHistory, summarize, isListable, pickHomes, buildDay, median, promo };

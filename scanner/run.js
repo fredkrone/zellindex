@@ -31,7 +31,7 @@ async function withRetry(fn, tries = 4) {
     try {
       for (const h of await withRetry(() => source.listCity(city))) {
         const prev = homes.get(h.id);
-        if (!prev) homes.set(h.id, { home: h, core });
+        if (!prev) homes.set(h.id, { home: h, core, city });
         else if (core) prev.core = true;
       }
     } catch (e) { cityErrors.push(city); log("city failed:", city, e.message); }
@@ -47,7 +47,7 @@ async function withRetry(fn, tries = 4) {
       try {
         const events = await withRetry(() => source.history(item.home));
         const r = analyzeHistory(item.home.price, events);
-        if (r) rows.push(Object.assign(r, { home: item.home, core: item.core }));
+        if (r) rows.push(Object.assign(r, { home: item.home, core: item.core, city: item.city }));
       } catch (e) { errors++; }
       if (++done % 1000 === 0) log(`${done}/${queue.length} checked`);
     }
@@ -62,6 +62,7 @@ async function withRetry(fn, tries = 4) {
     scannedAll: queue.length,
     coreCities: CORE.length - cityErrors.filter(c => CORE.includes(c)).length,
     allCities: cities.length - cityErrors.length,
+    cityNames: cities.map(([c]) => c),
     cityErrors
   });
 

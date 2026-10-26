@@ -17,12 +17,13 @@ function check(day) {
 function merge(prev, day) {
   const problems = check(day);
   if (problems.length) { const e = new Error("NOT SAVED: " + problems.join("; ")); e.problems = problems; throw e; }
-  const history = ((prev && prev.history) || []).filter(h => h.date !== day.metrics.date);
+  // Per-city stats are kept only on the latest reading (archived separately in site/markets.json).
+  const history = ((prev && prev.history) || []).filter(h => h.date !== day.metrics.date).map(h => { const { byCity, ...rest } = h; return rest; });
   history.push(day.metrics);
   history.sort((a, b) => (a.date < b.date ? -1 : 1));
   return {
     updated: day.metrics.date,
-    fields: ["address", "city", "state", "zip", "beds", "baths", "sqft", "yearBuilt", "price", "peakPrice", "peakDate", "cuts", "builder", "link"],
+    fields: ["address", "city", "state", "zip", "beds", "baths", "sqft", "yearBuilt", "price", "peakPrice", "peakDate", "cuts", "builder", "link", "promo", "scanCity", "community"],
     history: history.slice(-MAX_DAYS),
     homes: day.homes
   };

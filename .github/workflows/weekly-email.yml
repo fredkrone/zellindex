@@ -7,7 +7,7 @@ name: Weekly email
 
 on:
   schedule:
-    - cron: "13 15 * * 1"   # Mondays, 8:13 a.m. Pacific (daylight time)
+    - cron: "43 16 * * 1"   # Mondays, 9:43 a.m. Pacific daylight / 8:43 standard (after the morning data sync)
   workflow_dispatch: {}
 
 permissions:
