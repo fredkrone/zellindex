@@ -122,6 +122,7 @@ header h1 em{font-style:normal;color:var(--flag-text)}
 .chip{display:inline-block;font:700 .66rem var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:3px 7px;line-height:1.2}
 .chip.sold{background:var(--ink);color:var(--bg)}
 .chip.pending{border:1.5px solid var(--flag);color:var(--flag-text)}
+.chip.new{background:var(--flag);color:var(--on-flag);font-weight:700;margin-right:8px;vertical-align:2px}
 .outcome{font-size:.95rem;line-height:1.45}
 .outcome b{font-family:var(--mono);font-weight:600}
 .empty-r{padding:16px 0;color:var(--muted);border-bottom:1px solid var(--rule)}
@@ -408,9 +409,18 @@ const FALLBACK = [{"a":"326 Shore Dr","c":"Fort Myers","s":"FL","z":"33905","b":
   const history = (data && data.history) || [];
   const latest = history.length ? history[history.length - 1] : null;
   HOMES.forEach(h => { h.off = h.hi - h.cur; h.pct = h.off / h.hi * 100; });
+  // NEW badge: first found by the scan within 7 days of the latest scan (homes from the launch scan don't count).
+  try {
+    const rr = await fetch("results.json", { cache: "no-store" });
+    if (rr.ok && data && data.updated) {
+      const seen = new Map(((await rr.json()).homes || []).map(x => [x.path, x.firstSeen]));
+      const base = [...seen.values()].filter(Boolean).sort()[0];
+      HOMES.forEach(h => { const f = seen.get(h.u); h.isNew = !!f && f > base && (Date.parse(data.updated) - Date.parse(f)) / 864e5 < 7; });
+    }
+  } catch (e) {}
   if (data && data.updated) {
     $("asof").textContent = "New construction · Biggest markdowns from the high · Updated " + longDate(data.updated);
-    $("footer").textContent = "Data: Redfin listing and price-history records, rescanned daily; last scan " + longDate(data.updated) + ". Zillow links open Zillow's search for that address.";
+    $("footer").textContent = "Data: Redfin listing and price-history records, rescanned every Saturday; last scan " + longDate(data.updated) + ". Zillow links open Zillow's search for that address.";
   }
 
   // ---- Home list ----
@@ -422,15 +432,16 @@ const FALLBACK = [{"a":"326 Shore Dr","c":"Fort Myers","s":"FL","z":"33905","b":
     const st = stSel.value, el = $("state-stats");
     const bs = latest && latest.byState && st ? latest.byState[st] : null;
     const all = latest && latest.all;
-    if (bs) el.textContent = st + " today: " + fmt(bs.scanned) + " new homes scanned · typical cut " + (+bs.medianCut).toFixed(1) + "% · " + fmt(bs.down10) + " down 10%+ · " + fmt(bs.down20) + " down 20%+";
-    else if (all) el.textContent = "All " + all.cities + " cities today: " + fmt(all.scanned) + " new homes scanned · typical cut " + (+all.medianCut).toFixed(1) + "% · " + fmt(all.down10) + " down 10%+ · " + fmt(all.down20) + " down 20%+";
+    if (bs) el.textContent = st + " in the latest scan: " + fmt(bs.scanned) + " new homes scanned · typical cut " + (+bs.medianCut).toFixed(1) + "% · " + fmt(bs.down10) + " down 10%+ · " + fmt(bs.down20) + " down 20%+";
+    else if (all) el.textContent = "All " + all.cities + " cities in the latest scan: " + fmt(all.scanned) + " new homes scanned · typical cut " + (+all.medianCut).toFixed(1) + "% · " + fmt(all.down10) + " down 10%+ · " + fmt(all.down20) + " down 20%+";
     else el.textContent = "";
   }
   function render(){
     const st = stSel.value, mx = +$("f-max").value || Infinity, who = $("f-who").value;
     let list = HOMES.filter(h => (!st || h.s === st) && h.cur <= mx && (!who || (who === "b" ? !!h.bld : !h.bld)));
     list.sort((a,b) => sort === "pct" ? b.pct - a.pct : sort === "usd" ? b.off - a.off : a.cur - b.cur);
-    count.textContent = list.length + " of " + HOMES.length + " homes";
+    const nNew = list.filter(h => h.isNew).length;
+    count.textContent = list.length + " of " + HOMES.length + " homes" + (nNew ? " · " + nNew + " new this week" : "");
     stateLine();
     if (!list.length) { lots.innerHTML = '<p class="empty">No homes match these filters. Widen the price or state.</p>'; return; }
     lots.innerHTML = list.map((h,i) => {
@@ -441,7 +452,7 @@ const FALLBACK = [{"a":"326 Shore Dr","c":"Fort Myers","s":"FL","z":"33905","b":
         '<span class="rk">' + (i+1) + '</span>' +
         '<div class="pct num">' + h.pct.toFixed(1) + '%<small>off the high</small></div>' +
         '<div class="info">' +
-          '<div class="addr">' + esc(h.a) + ' <span>' + esc(h.c) + ', ' + esc(h.s) + ' ' + esc(h.z) + '</span></div>' +
+          '<div class="addr">' + (h.isNew ? '<span class="chip new" title="First found in the last 7 days">New</span>' : '') + esc(h.a) + ' <span>' + esc(h.c) + ', ' + esc(h.s) + ' ' + esc(h.z) + '</span></div>' +
           '<div class="facts">' + facts + '</div>' +
           '<div class="bld">' + who + '</div>' +
           (h.promo ? '<div class="promo"><b>Incentive:</b> ' + esc(h.promo) + '</div>' : '') +
@@ -604,7 +615,7 @@ const FALLBACK = [{"a":"326 Shore Dr","c":"Fort Myers","s":"FL","z":"33905","b":
   }
   $("res-sold").innerHTML = sold.length ? sold.map(card).join("") : '<p class="empty-r">Nothing from the list has closed yet. New-build sales usually close 30 to 60 days after the contract.</p>';
   $("res-pending").innerHTML = pending.length ? pending.map(card).join("") : '<p class="empty-r">No contracts yet. Homes move here the day a builder accepts an offer.</p>';
-  $("res-foot").textContent = (off.length ? off.length + (off.length === 1 ? " home was" : " homes were") + " pulled off the market without a sale. " : "") + (data && data.updated ? "Statuses checked every morning; last check " + day(data.updated) + "." : "");
+  $("res-foot").textContent = (off.length ? off.length + (off.length === 1 ? " home was" : " homes were") + " pulled off the market without a sale. " : "") + (data && data.updated ? "Statuses checked every Saturday; last check " + day(data.updated) + "." : "");
 })();
 </script>
 
