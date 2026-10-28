@@ -292,14 +292,14 @@ footer{font-size:.82rem;color:var(--muted)}
 <section class="trend" aria-labelledby="trend-h">
   <div class="trend-head">
     <h2 id="trend-h">Is the graveyard growing?</h2>
-    <p class="label" id="trend-asof">Daily scan · loading readings…</p>
+    <p class="label" id="trend-asof">Weekly scan · loading readings…</p>
   </div>
   <div class="panels">
     <figure class="panel"><figcaption><span>Typical cut</span><b class="num" id="t-median">—</b></figcaption><svg id="c-median" viewBox="0 0 320 120" preserveAspectRatio="none" role="img" aria-label="Typical cut over time"></svg></figure>
     <figure class="panel"><figcaption><span>Down 10%+</span><b class="num" id="t-down10">—</b></figcaption><svg id="c-down10" viewBox="0 0 320 120" preserveAspectRatio="none" role="img" aria-label="Homes down 10% or more over time"></svg></figure>
     <figure class="panel"><figcaption><span>Down 20%+</span><b class="num" id="t-down20">—</b></figcaption><svg id="c-down20" viewBox="0 0 320 120" preserveAspectRatio="none" role="img" aria-label="Homes down 20% or more over time"></svg></figure>
   </div>
-  <p class="note" id="trend-note">A new reading is added every morning. The line starts with today's scan.</p>
+  <p class="note" id="trend-note">A new reading is added every Saturday.</p>
 </section>
 
 <section class="signup" id="signup" aria-labelledby="signup-h" hidden>
@@ -364,10 +364,10 @@ footer{font-size:.82rem;color:var(--muted)}
   <div>
     <h2>How this was built</h2>
     <ul>
-      <li>Every morning, scan Redfin's new-construction listings in 105 cities where builders are active, keeping homes on the market 60+ days.</li>
+      <li>Every Saturday, scan Redfin's new-construction listings in 105 cities where builders are active, keeping homes on the market 60+ days.</li>
       <li>Read each home's full price history and take its highest asking price since it was last sold (or the last two years).</li>
       <li>Drop one-day price glitches, duplicate feeds, land, unbuilt plans and mobile homes; list only homes with at least three step-down cuts.</li>
-      <li>The trend charts use the original 40 cities only, so each day compares with the last.</li>
+      <li>The trend charts use the original 40 cities only, so each week compares with the last.</li>
     </ul>
   </div>
   <div>
@@ -376,7 +376,7 @@ footer{font-size:.82rem;color:var(--muted)}
       <li>A big drop can mean the first ask was too high, not that the house is cheap. Compare against recent sales nearby.</li>
       <li>Builders often add rate buydowns or closing credits on top of the cut. Ask what's offered.</li>
       <li>Perry Homes shows up again and again in Austin and Dallas suburbs; one seller cutting this hard may cut more.</li>
-      <li>Prices change daily. Treat this as a starting list, not advice; I'm not a licensed financial advisor.</li>
+      <li>Prices change often. Treat this as a starting list, not advice; I'm not a licensed financial advisor.</li>
     </ul>
   </div>
 </section>
@@ -479,7 +479,7 @@ const FALLBACK = [{"a":"326 Shore Dr","c":"Fort Myers","s":"FL","z":"33905","b":
   }));
   render();
 
-  // ---- Daily trend (core 40 cities) ----
+  // ---- Trend (core 40 cities) ----
   function delta(el, cur, prev, unit){
     if (prev == null) { el.textContent = ""; return; }
     const d = cur - prev;
@@ -507,7 +507,7 @@ const FALLBACK = [{"a":"326 Shore Dr","c":"Fort Myers","s":"FL","z":"33905","b":
     if (rows.length > 1) s += '<text class="ax" x="' + (W - 2) + '" y="' + (H - 4) + '" text-anchor="end">' + short(rows[last].date) + '</text>';
     svg.innerHTML = s;
   }
-  if (!history.length) { $("trend-asof").textContent = "Daily scan · first reading pending"; return; }
+  if (!history.length) { $("trend-asof").textContent = "Weekly scan · first reading pending"; return; }
   const cur = latest, prev = history.length > 1 ? history[history.length - 2] : null;
   $("m-scanned").textContent = fmt(cur.scanned);
   $("m-median").textContent = (+cur.medianCut).toFixed(1) + "%";
@@ -523,9 +523,9 @@ const FALLBACK = [{"a":"326 Shore Dr","c":"Fort Myers","s":"FL","z":"33905","b":
   chart($("c-median"), history, "medianCut", true);
   chart($("c-down10"), history, "down10");
   chart($("c-down20"), history, "down20");
-  $("trend-asof").textContent = "Daily scan · " + history.length + (history.length === 1 ? " reading" : " readings") + " · latest " + short(cur.date);
+  $("trend-asof").textContent = "Weekly scan (daily until Oct 27) · " + history.length + (history.length === 1 ? " reading" : " readings") + " · latest " + short(cur.date);
   $("trend-note").textContent = history.length < 3
-    ? "A new reading is added every morning, always from the same 40 cities so the days compare. Give it a week or two before reading much into the direction."
+    ? "A new reading is added every Saturday, always from the same 40 cities so the weeks compare. Give it a few weeks before reading much into the direction."
     : "Rising lines mean more builders are cutting, and cutting deeper. Each reading rescans the same 40 cities.";
 })();
 
