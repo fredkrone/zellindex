@@ -125,7 +125,7 @@ function marketSection(h, m, note) {
   if (note && note.bottom) lines.push(`**Has it hit bottom?** ${note.bottom.trim()}`, "");
   if (m) {
     const n = m.now, ch = (a, b, pct) => b == null ? "" : ` (${a - b >= 0 ? "up" : "down"} ${pct ? Math.abs(a - b).toFixed(1) + " pts" : num(Math.abs(a - b))} in 4 weeks)`;
-    lines.push(`New homes on the market 60+ days in ${m.city}, from today's scan:`, "");
+    lines.push(`New homes on the market 60+ days in ${m.city}, from the latest scan:`, "");
     lines.push(`- **Typical cut from peak:** ${(+n.medianCut).toFixed(1)}%${m.month ? ch(n.medianCut, m.month.medianCut, true) : ""}`);
     lines.push(`- **Down 10% or more:** ${num(n.down10)} of ${num(n.withHistory)} homes (${m.down10Share.toFixed(0)}%)`);
     lines.push(`- **Down 20% or more:** ${num(n.down20)}${m.month ? ch(n.down20, m.month.down20) : ""}`);
@@ -191,7 +191,7 @@ ${outcomesSection(ctx, today)}
 
 ### Are builder cuts spreading nationally?
 
-Every morning we rescan the same 40 cities where builders are cutting most.
+Every Saturday we rescan the same 40 cities where builders are cutting most.
 
 ${trendLine(ctx.data.history)}
 
