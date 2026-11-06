@@ -14,12 +14,15 @@ Grave dancing is buying from a seller who has to sell. This project finds new-co
 
 ```
 site/            the web page (static: index.html + data.json, results.json, markets.json, weekly notes)
+                 landlords.html + landlords.json: the landlord-friendly states ranking
 scanner/
   run.js         daily scan: list homes → read price histories → update site/data.json
   analyze.js     the math: markdown from the high, glitch filters, daily summary, list picks
   merge.js       adds today's reading to history; refuses readings that look broken
   weekly-email.js  builds the weekly email from site/data.json
   cities.js      CORE (trend, never edit) and EXTRA (coverage, safe to add) cities
+  landlords/     build.js scores the 50 states (politics, property tax, tenant law) into site/landlords.json;
+                 edit its tables after an election or a law change and rerun `node scanner/landlords/build.js site/landlords.json`
   sources/       data sources; see sources/README.md
 test/            node --test unit tests for the math
 .github/workflows/

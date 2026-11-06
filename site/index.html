@@ -1,13 +1,13 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>The Grave Dancer's List</title>
-<meta name="description" content="New-construction homes with the deepest price cuts from their peak asking price, across 105 U.S. cities. Updated every morning, with a daily index of how many builders are cutting.">
+<meta name="description" content="New-construction homes with the deepest price cuts from their peak asking price, across 105 U.S. cities. Updated every Saturday, with a weekly index of how many builders are cutting.">
 <link rel="canonical" href="https://fredkrone.github.io/zellindex/">
 <meta name="theme-color" content="#ECEFEA">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="The Grave Dancer's List">
 <meta property="og:title" content="The Grave Dancer's List: new homes with the deepest price cuts">
-<meta property="og:description" content="New-construction homes with the deepest price cuts from their peak asking price, across 105 U.S. cities. Updated every morning, with a daily index of how many builders are cutting.">
+<meta property="og:description" content="New-construction homes with the deepest price cuts from their peak asking price, across 105 U.S. cities. Updated every Saturday, with a weekly index of how many builders are cutting.">
 <meta property="og:url" content="https://fredkrone.github.io/zellindex/">
 <meta property="og:image" content="https://fredkrone.github.io/zellindex/og.png">
 <meta property="og:image:width" content="1200">
@@ -15,7 +15,7 @@
 <meta property="og:image:alt" content="The Grave Dancer's List: new homes with the deepest cuts from their peak asking price.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="The Grave Dancer's List">
-<meta name="twitter:description" content="New-construction homes with the deepest price cuts from their peak asking price, across 105 U.S. cities. Updated every morning, with a daily index of how many builders are cutting.">
+<meta name="twitter:description" content="New-construction homes with the deepest price cuts from their peak asking price, across 105 U.S. cities. Updated every Saturday, with a weekly index of how many builders are cutting.">
 <meta name="twitter:image" content="https://fredkrone.github.io/zellindex/og.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231B221E'/%3E%3Cpath d='M6 10h20M6 16h14M6 22h8' stroke='%23FF5A4B' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E">
 <script>
@@ -53,7 +53,7 @@
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-.wrap{max-width:1080px;margin:0 auto;padding-block:36px 64px;display:flex;flex-direction:column;gap:44px}
+.wrap{max-width:1080px;margin:0 auto;padding-block:20px 64px;display:flex;flex-direction:column;gap:44px}
 h1,h2,h3{font-family:var(--display);margin:0;line-height:.92;text-wrap:balance;text-transform:uppercase}
 p{margin:0;max-width:66ch}
 a{color:var(--link);text-underline-offset:3px}
@@ -180,11 +180,23 @@ footer{font-size:.82rem;color:var(--muted)}
   .count{margin-left:0;width:100%}
   .tabs button{flex:1 1 auto;justify-content:center;padding:10px 10px 8px}
 }
+.sitenav{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;border-bottom:2px solid var(--ink);padding-bottom:10px;margin-bottom:-14px;font:600 .74rem var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.sitenav a{color:var(--ink);text-decoration:none;padding:4px 0}
+.sitenav a:hover{color:var(--flag-text)}
+.sitenav a.new::after{content:"New";margin-left:6px;font-size:.6rem;padding:1px 5px;background:var(--flag);color:var(--on-flag)}
+.sitenav .brand{font:900 1.15rem var(--display);letter-spacing:.02em;margin-right:auto}
+@media (max-width:600px){.sitenav{font-size:.66rem;gap:4px 14px}.sitenav .brand{flex-basis:100%}}
 </style>
 </head><body>
 
 
 <div class="wrap">
+<nav class="sitenav" aria-label="Site">
+  <a class="brand" href="./">The Grave Dancer's List</a>
+  <a href="./">Price cuts</a>
+  <a href="#results" id="nav-results">Sold &amp; under contract</a>
+  <a href="landlords.html" class="new">Landlord-friendly states</a>
+</nav>
 <header>
   <div class="intro">
     <span class="label" id="asof">New construction · Biggest markdowns from the high · Checked Oct 24, 2026</span>
@@ -556,6 +568,7 @@ const FALLBACK = [{"a":"326 Shore Dr","c":"Fort Myers","s":"FL","z":"33905","b":
     if (e.key === "ArrowRight" || e.key === "ArrowLeft") { const n = all[(i + (e.key === "ArrowRight" ? 1 : all.length - 1)) % all.length]; n.focus(); n.click(); }
   }));
   if (location.hash === "#results") show("results", false);
+  window.addEventListener("hashchange", () => { show(location.hash === "#results" ? "results" : "list", false); if (location.hash === "#results") tabs.results.scrollIntoView({ block: "start" }); });
 
   let data = null;
   try { const r = await fetch("results.json", { cache: "no-store" }); if (r.ok) data = await r.json(); } catch (e) {}

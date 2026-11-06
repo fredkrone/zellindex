@@ -1,0 +1,51 @@
+State,Formal_Landlord_Tenant_Act,Rent_Control_Programs,Regulatory_Burdens,Potential_Eviction_Costs,Avg_Eviction_Rates_Timelines,Required_Notice_Periods,Effective_Property_Tax_Rate,Adverse_Possession_Requirements,Security_Deposit_Rules,Late_Fee_Rules,Overall_Score,Verdict
+Alabama,4,5,5,3,4,4,4,4,4,3,4,Landlord-Friendly
+Alaska,4,5,5,4,3,4,4,3,4,3,3.8,Somewhat Landlord-Friendly
+Arizona,4,5,4,4,4,5,4,4,3,5,4.2,Landlord-Friendly
+Arkansas,4,5,5,5,5,4,4,3,4,3,4.1,Landlord-Friendly
+California,1,1,2,2,2,2,3,2,2,2,1.9,Strongly Tenant-Friendly
+Colorado,3,5,4,3,3,3,4,4,3,3,3.5,Somewhat Landlord-Friendly
+Connecticut,3,5,5,3,3,4,3,4,3,2,3.5,Somewhat Landlord-Friendly
+Delaware,4,5,5,4,4,3,4,4,4,3,4,Landlord-Friendly
+Florida,4,5,5,4,4,5,4,4,4,4,4.3,Strongly Landlord-Friendly
+Georgia,4,5,4,4,4,5,4,4,4,4,4.3,Strongly Landlord-Friendly
+Hawaii,3,5,4,3,3,4,2,4,4,3,3.5,Somewhat Landlord-Friendly
+Idaho,3,5,5,4,4,4,4,4,4,4,4.1,Landlord-Friendly
+Illinois,2,5,3,3,3,3,1,3,3,3,2.8,Somewhat Tenant-Friendly
+Indiana,3,5,4,4,4,4,4,4,4,4,3.8,Somewhat Landlord-Friendly
+Iowa,4,5,3,4,4,4,2,3,3,2,3.3,Somewhat Landlord-Friendly
+Kansas,4,5,5,4,4,5,3,4,3,5,4.3,Strongly Landlord-Friendly
+Kentucky,3,5,5,4,4,4,4,4,4,5,4.2,Landlord-Friendly
+Louisiana,4,5,5,4,5,5,5,4,3,5,4.2,Strongly Landlord-Friendly
+Maine,4,3,5,5,4,4,4,4,3,3,3.9,Somewhat Landlord-Friendly
+Maryland,3,4,4,5,3,3,3,4,2,3,3.5,Somewhat Landlord-Friendly
+Massachusetts,3,5,4,1,2,3,2,4,2,2,3,Balanced / Somewhat Tenant-Friendly
+Michigan,3,5,5,3,4,5,1,4,3,5,3.9,Somewhat Landlord-Friendly
+Minnesota,3,4,4,3,3,3,2,4,4,3,3.3,Somewhat Landlord-Friendly
+Mississippi,4,5,5,4,4,5,5,4,4,5,4.2,Landlord-Friendly
+Missouri,3,5,5,3,4,5,3,4,3,5,4,Landlord-Friendly
+Montana,3,5,4,4,4,4,4,4,4,5,4.1,Landlord-Friendly
+Nebraska,3,5,5,3,4,5,1,4,3,5,3.7,Somewhat Landlord-Friendly
+Nevada,3,3,5,4,3,4,5,4,3,3,3.7,Somewhat Landlord-Friendly
+New Hampshire,3,4,5,3,3,4,3,4,2,5,3.7,Somewhat Landlord-Friendly
+New Jersey,2,1,2,2,2,2,1,3,1,2,1.8,Strongly Tenant-Friendly
+New Mexico,3,5,5,3,4,5,5,4,4,3,4.1,Somewhat Landlord-Friendly
+New York,2,2,4,2,2,2,2,4,2,3,2.8,Somewhat Tenant-Friendly
+North Carolina,3,5,5,4,4,5,4,4,4,2,4,Landlord-Friendly
+North Dakota,4,5,5,5,4,5,5,4,4,5,4.6,Strongly Landlord-Friendly
+Ohio,3,5,5,3,3,4,2,4,4,5,3.8,Somewhat Landlord-Friendly
+Oklahoma,3,5,5,4,5,5,3,4,3,5,4.2,Strongly Landlord-Friendly
+Oregon,1,1,4,2,2,3,4,3,3,1,2.1,Tenant-Friendly
+Pennsylvania,3,5,5,3,2,3,2,4,3,3,3.5,Balanced / Somewhat Tenant-Friendly
+Rhode Island,2,1,3,2,2,3,3,4,3,3,2.9,Somewhat Tenant-Friendly
+South Carolina,3,5,5,4,4,4,5,4,4,5,4.3,Strongly Landlord-Friendly
+South Dakota,3,5,5,4,5,5,3,4,3,5,4.3,Strongly Landlord-Friendly
+Tennessee,3,5,5,3,3,4,5,4,4,3,3.9,Somewhat Landlord-Friendly
+Texas,3,5,5,3,3,4,2,4,4,3,3.7,Somewhat Landlord-Friendly
+Utah,4,5,5,4,5,5,5,3,4,3,4.4,Strongly Landlord-Friendly
+Vermont,2,1,3,2,2,2,3,3,3,3,2.3,Tenant-Friendly
+Virginia,3,3,4,3,3,3,4,4,3,3,3.7,Balanced / Somewhat Landlord-Friendly
+Washington,1,2,2,1,1,1,3,2,2,2,1.9,Strongly Tenant-Friendly
+West Virginia,3,5,5,4,4,3,5,3,3,5,3.9,Somewhat Landlord-Friendly
+Wisconsin,3,5,3,3,3,4,1,4,2,3,3.2,Balanced / Somewhat Landlord-Friendly
+Wyoming,3,5,5,4,4,5,5,4,4,5,4.5,Strongly Landlord-Friendly
