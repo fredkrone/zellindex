@@ -1,0 +1,31 @@
+{
+  "forDate": "2026-11-09",
+  "written": "2026-11-08",
+  "house": {
+    "path": "/TX/Austin/2609-Davis-Ln-78745/unit-2/home/195419761",
+    "address": "2609 Davis Ln #2",
+    "city": "Austin",
+    "state": "TX"
+  },
+  "market": "Austin, TX",
+  "builder": "Custom or small builder (listed by Kuper Sotheby's International Realty)",
+  "incentives": "None advertised. The home has been on the market 551 days and the price was cut by $51,000 on Nov 6, so ask the seller to cover closing costs or a rate buydown on top of the new price.",
+  "rating": 2,
+  "ratingWhy": "Austin's condo segment is still deeply discounted, but the city's overall market is holding: prices are up and listings are down from a year ago.",
+  "writeup": "This 1,100 sq ft two-bedroom condo in South Austin (78745), built in 2025, was first listed in April 2025 at $545,000. It is now $299,000, or $272 a square foot, after nine cuts. The latest cut, $51,000 on Nov 6, followed seven months at $350,000. For eight months between October 2025 and June 2026 the owner also advertised it for rent at $2,800 a month, which is a useful benchmark if you're buying to rent it out. The listing describes a finished home with a floating staircase, open kitchen and en-suite primary bath on a 0.36-acre lot.\n\nAustin overall is steadier than this price drop suggests. In September the city's median sale price was $570,958, up 4.2% from a year earlier, with 4,502 active listings (down 10.3%) and 5.4 months of inventory. Condos are the weak spot: earlier this year the median condo sale was $390,000, down 6.5% from a year earlier, with about 7.5 months of supply. Among the 402 new-construction Austin homes we track that have been for sale 60+ days, the typical cut from peak is 6.1%, 77 are down 10% or more, and 14 are down 20% or more.",
+  "bottom": "For Austin condos, probably not yet: supply is still above seven months, and condo prices were still falling as of mid-2026. For new builds across the city, cuts eased slightly this week (typical cut 6.1%, from 6.5% on Oct 27), but that's one reading, too little to call a turn.",
+  "sources": [
+    {
+      "title": "Central Texas housing market slows in September 2026 (Unlock MLS data via My Neighborhood News, Oct 15, 2026)",
+      "url": "https://myneighborhoodnews.com/central-texas-housing-market-slows-in-september-2026-as-mortgage-rates-rise-but-home-prices-tell-a-different-story"
+    },
+    {
+      "title": "Austin condo market 2026: prices, HOA fees and buildings (Neuhaus Realty Group, updated May 30, 2026)",
+      "url": "https://neuhausre.com/austin-condo-market-2026-prices-hoa-fees-best-buildings"
+    },
+    {
+      "title": "Austin condo inventory hits record high (Team Price Real Estate, Dec 9, 2025)",
+      "url": "https://teamprice.com/articles/austin-condo-inventory-hits-record-high"
+    }
+  ]
+}
