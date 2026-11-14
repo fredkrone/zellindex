@@ -1,0 +1,27 @@
+{
+  "forDate": "2026-11-16",
+  "written": "2026-11-14",
+  "house": {
+    "path": "/TX/McKinney/708-W-White-Ave-75069/home/191972079",
+    "address": "708 W White Ave",
+    "city": "McKinney",
+    "state": "TX"
+  },
+  "market": "McKinney, TX",
+  "builder": "Custom or small builder (listed by Coldwell Banker Apex, REALTORS)",
+  "incentives": "None in the current listing. A Redfin agent's tour note from about a year ago mentioned a built-in financial incentive, but that may have ended, so ask the listing agents directly. The house has been on and off the market for more than two years, which gives you room to ask for closing costs or a rate buydown.",
+  "rating": 3,
+  "ratingWhy": "McKinney's new builds are being cut deeply and widely, and Collin County's resale prices are falling, though the cuts held steady between our last two readings.",
+  "writeup": "This four-bedroom, 3.5-bath house a few blocks from Historic Downtown McKinney was finished in 2024. At 2,785 sq ft, it has a study, a large kitchen island and a spa-style primary bath. It was first listed in August 2024 at $850,000 and is now $529,000, about $190 a square foot, after a dozen cuts and several relistings. The latest cut was to $529,000 on Oct 7. For about seven months in 2025 it was also advertised for rent at $3,500 a month, a useful benchmark if you're buying to rent. The listing warns that GPS misdirects visitors; use 1402 Bradley, the corner lot's other street.\n\nMcKinney is one of the deeper new-construction markets we track. Of 136 new homes in the city that have been for sale 60+ days, 91% have been cut. The typical cut from peak is 7.4%, 42 homes are down 10% or more, and 4 are down 20% or more. The wider county is soft too: Collin County's median sale price fell 6.8% from a year earlier, to $465,000, the steepest drop among the 13 Dallas-Fort Worth counties The Real Deal tracked. Across the metro there was about four months of inventory.",
+  "bottom": "Not yet, as far as we can tell. Collin County prices were still falling year over year as of mid-2026, though MetroTex said in September that downward price pressure in the Dallas-Plano area was easing. Our McKinney numbers barely moved between Oct 27 and Nov 7 (typical cut 7.35% to 7.37%). That's two readings, too few to call a bottom.",
+  "sources": [
+    {
+      "title": "Home prices across the Dallas area fell in 2026 (The Real Deal, June 8, 2026)",
+      "url": "https://therealdeal.com/data/texas/2026/home-prices-across-dallas-area-fell-in-2026/"
+    },
+    {
+      "title": "North Texas buyers keep the market moving (MetroTex Association of Realtors, Sept 1, 2026)",
+      "url": "https://www.mymetrotex.com/north-texas-housing-market-momentum/"
+    }
+  ]
+}

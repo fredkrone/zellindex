@@ -52,7 +52,12 @@ function load() {
     address: a[0], city: a[1], state: a[2], zip: a[3], beds: a[4], baths: a[5], sqft: a[6], year: a[7],
     price: a[8], peak: a[9], peakDate: a[10], cuts: a[11], builder: title(a[12]), path: a[13],
     promo: a[14] || null, scanCity: a[15] || null, community: a[16] || null
-  })).map(h => Object.assign(h, { off: h.peak - h.price, pct: (h.peak - h.price) / h.peak * 100 }))
+  })).map(h => {
+    // Prefer the scan city's spelling when it's the same name (Redfin feeds give "Mckinney"; the scan list says "McKinney").
+    const sc = h.scanCity && h.scanCity.split(", ")[0];
+    if (sc && sc.toLowerCase() === String(h.city).toLowerCase()) h.city = sc;
+    return h;
+  }).map(h => Object.assign(h, { off: h.peak - h.price, pct: (h.peak - h.price) / h.peak * 100 }))
     .sort((a, b) => b.pct - a.pct);
   const featured = fs.existsSync(FEATURED) ? JSON.parse(fs.readFileSync(FEATURED, "utf8")) : [];
   const markets = fs.existsSync(MARKETS) ? JSON.parse(fs.readFileSync(MARKETS, "utf8")) : { days: [] };
@@ -129,7 +134,7 @@ function marketSection(h, m, note) {
     lines.push(`- **Typical cut from peak:** ${(+n.medianCut).toFixed(1)}%${m.month ? ch(n.medianCut, m.month.medianCut, true) : ""}`);
     lines.push(`- **Down 10% or more:** ${num(n.down10)} of ${num(n.withHistory)} homes (${m.down10Share.toFixed(0)}%)`);
     lines.push(`- **Down 20% or more:** ${num(n.down20)}${m.month ? ch(n.down20, m.month.down20) : ""}`);
-    if (n.medianDom) lines.push(`- **Typical time on market:** ${num(n.medianDom)} days`);
+    if (n.medianDom) lines.push(`- **Typical time on market:** ${num(Math.round(n.medianDom))} days`);
     lines.push("");
   }
   if (note && Array.isArray(note.sources) && note.sources.length) {
