@@ -30,5 +30,13 @@
   "city": "Austin",
   "state": "TX",
   "rating": 2
+ },
+ {
+  "date": "2026-11-16",
+  "path": "/TX/McKinney/708-W-White-Ave-75069/home/191972079",
+  "address": "708 W White Ave",
+  "city": "McKinney",
+  "state": "TX",
+  "rating": 3
  }
 ]
