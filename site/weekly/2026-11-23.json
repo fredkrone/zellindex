@@ -1,0 +1,31 @@
+{
+  "forDate": "2026-11-23",
+  "written": "2026-11-22",
+  "house": {
+    "path": "/FL/Tampa/3005-E-17th-Ave-33605/home/47331433",
+    "address": "3005 E 17th Ave",
+    "city": "Tampa",
+    "state": "FL"
+  },
+  "market": "Tampa, FL",
+  "builder": "Custom or small builder (listed by Smith & Associates Real Estate)",
+  "incentives": "None advertised. The home has been for sale since December 2024 and for rent since April 2025. Ask for a closing-cost credit, or ask what lease terms they'd take while you decide.",
+  "rating": 2,
+  "ratingWhy": "Tampa's new builds are being cut, but less deeply than in our hardest-hit cities, and the wider market is slow rather than falling, with prices roughly flat and inventory down from a year ago.",
+  "writeup": "This 2,180 sq ft house in East Tampa (33605), built in 2023, has three bedrooms, each with its own bath, plus a half bath. The listing places it about five minutes from downtown and describes an open plan, a granite kitchen and a covered patio. It was listed at $715,000 in December 2024 and was $454,000 in our Nov 14 scan, after 11 cuts. The same brokerage has also had it for rent since April 2025, first at $4,500 a month and then at $3,800, a useful benchmark if you're buying to rent it out. We couldn't open the live listing this week, so confirm the current price and status on Redfin before you call.\n\nAcross the Tampa Bay area the market is slow but not falling. October closed sales were down about 13% from a year earlier. The average price was $490,237, up about 4%. Inventory was down about 10%, at 5.4 months of supply. Homes are taking a median of 69 days to sell, 17 days longer than a year ago. Of the 157 new-construction Tampa homes we track that have been for sale 60+ days, 76% have been cut, the typical cut is 6.1%, 25 are down 10% or more, and 2 are down 20% or more.",
+  "bottom": "Not clearly. Months of supply was 5.4 in October, slightly above a year earlier, and homes are taking longer to sell, though prices are holding roughly flat. For new builds, the typical cut narrowed in our latest scan, from 6.4% to 6.1%, but a few weekly readings are too few to call a bottom.",
+  "sources": [
+    {
+      "title": "Suncoast Tampa Association of Realtors, market statistics for October 2026 (Stellar MLS data, Nov 5, 2026)",
+      "url": "https://irp.cdn-website.com/3d0f9886/files/uploaded/Suncoast+Tampa+Market+Monthly+Statistics+October+2026.pdf"
+    },
+    {
+      "title": "Tampa could remain a buyer's market well into 2027 (Home Buying Institute, Oct 5, 2026, updated Nov 2, 2026)",
+      "url": "https://homebuyinginstitute.com/mortgage/tampa-buyers-market-into-2027/"
+    },
+    {
+      "title": "3005 E 17th Ave rental listing, MLS TB8373476 (Coldwell Banker)",
+      "url": "https://www.coldwellbankerhomes.com/fl/tampa/3005-e-17th-ave/pid_64748600"
+    }
+  ]
+}

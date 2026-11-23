@@ -145,7 +145,9 @@ function marketSection(h, m, note) {
 
 /** Homes from the list that went under contract or sold in the past week. */
 function outcomesSection(ctx, today) {
-  const since = addDays(today, -7);
+  // Count back from the latest status check, so a missed scan doesn't hide that week's contracts.
+  const checked = ctx.results.updated && ctx.results.updated < today ? ctx.results.updated : today;
+  const since = addDays(checked, -7);
   const homes = (ctx.results.homes || []);
   const recent = homes.filter(h => (h.status === "sold" && h.soldDate >= since) || (h.status === "pending" && h.pendingDate >= since))
     .sort((a, b) => ((b.soldDate || b.pendingDate) || "").localeCompare((a.soldDate || a.pendingDate) || ""));
