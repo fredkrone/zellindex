@@ -38,5 +38,13 @@
   "city": "McKinney",
   "state": "TX",
   "rating": 3
+ },
+ {
+  "date": "2026-11-23",
+  "path": "/FL/Tampa/3005-E-17th-Ave-33605/home/47331433",
+  "address": "3005 E 17th Ave",
+  "city": "Tampa",
+  "state": "FL",
+  "rating": 2
  }
 ]
